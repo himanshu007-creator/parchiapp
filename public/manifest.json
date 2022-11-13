@@ -2,6 +2,7 @@
 	"theme_color": "#f69435",
 	"background_color": "#FF5858",
 	"display": "standalone",
+	"start_url": "/",
 	"name": "Parchi ",
 	"short_name": "Parchi",
 	"description": "Health records at your fingertips",
