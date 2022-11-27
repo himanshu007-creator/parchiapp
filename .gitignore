@@ -9,3 +9,4 @@ node_modules
 **/public/sw**
 
 .env
+.vercel
