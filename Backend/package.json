@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon --config nodemon.json src/index.js",
-    "start": "node index.js"
+    "start": "node index.js -p 8080"
   },
   "author": "",
   "license": "ISC",
