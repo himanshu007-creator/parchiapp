@@ -1,0 +1,28 @@
+{
+  "name": "parchiapp",
+  "version": "1.0.0",
+  "description": "Smart Health Solutions",
+  "main": "index.js",
+  "scripts": {
+    "server-prod": "cd Backend && npm run start",
+    "client-prod": "cd Frontend && npm run build && npm start",
+    "server-dev": "cd Backend && npm run dev",
+    "client-dev": "cd Frontend && npm run dev",
+    "start": "concurrently \"npm run server-prod\" \"npm run client-prod\"",
+    "dev": "concurrently \"npm run server-dev\" \"npm run client-dev\""
+
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/himanshu007-creator/parchiapp.git"
+  },
+  "keywords": [
+    "parchi"
+  ],
+  "author": "himanshu007-creator , piyushdhir1",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/himanshu007-creator/parchiapp/issues"
+  },
+  "homepage": "https://github.com/himanshu007-creator/parchiapp#readme"
+}

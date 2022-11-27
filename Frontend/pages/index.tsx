@@ -1,8 +1,10 @@
 import Page from '@/components/page'
-
-const Index = () => (
+import Image from "next/image"
+// 
+const Index = ({data}:any) => (
 	<Page>
-			<h1>PARCHI INIT</h1>
+			<h1>MONOREPO Setup Successful</h1>
+			<Image src="http://localhost:3000/view/parchi-secure-22.FAL.png" alt="" height={500} width={500}/>
 	</Page>
 )
 
