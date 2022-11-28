@@ -4,12 +4,12 @@
   "description": "Smart Health Solutions",
   "main": "index.js",
   "scripts": {
-    "server-prod": "cd Backend && npm run start -p 8080",
-    "client-prod": "cd Frontend && npm run build && npm start -p 3000",
-    "server-dev": "cd Backend && npm run dev -p 8080",
-    "client-dev": "cd Frontend && npm run dev -p 3000",
-    "start": "concurrently \"npm run server-prod -p 8080\" \"npm run client-prod -p 3000\"",
-    "dev": "concurrently \"npm run server-dev -p 8080\" \"npm run client-dev -p 3000\""
+    "server-prod": "cd Backend && npm run start",
+    "client-prod": "cd Frontend && npm run build && npm start",
+    "server-dev": "cd Backend && npm run dev",
+    "client-dev": "cd Frontend && npm run dev",
+    "start": "concurrently \"npm run server-prod\" \"npm run client-prod\"",
+    "dev": "concurrently \"npm run server-dev\" \"npm run client-dev\""
 
   },
   "repository": {

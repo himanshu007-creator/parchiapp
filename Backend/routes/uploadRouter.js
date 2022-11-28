@@ -18,13 +18,12 @@ let gfs, gridfsBucket;
 })
 
 Router.post('/upload', [upload.single('file'), verifyToken], (req,res)=>{
-    console.log(req.user)
-    const fileNameEdited = req.file.filename.replace(' ','-')
+    const fileNameEdited = req.file.originalname
+    // const  fileExtension = req.params.filename.substring(req.params.filename.lastIndexOf("."));
     gfs.files.findOne({ filename: fileNameEdited}, (err,file)=>{
         if(!file || file.length===0){
     if(req.file === undefined || req.file === null) return res.send("NO FILES FOUND")
-    console.log("FILE: ", file)
-    const fileUrl = `${req.protocol + '://' + req.get('host')}/view/${fileNameEdited.replace(' ','-')}`
+    const fileUrl = `${req.protocol + '://' + req.get('host')}/view/parchi-secure-${fileNameEdited}`
     return res.send(fileUrl)
         }
     })

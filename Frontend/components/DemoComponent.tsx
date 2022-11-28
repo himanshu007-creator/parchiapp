@@ -15,11 +15,10 @@ export const DemoComponent: React.FC = () => {
       : '';
 
 const baseURL = `${origin}${asPath}`;
-const ImgURL = baseURL.replace('8080','3000')
-console.log(">>>ImgUrl: ",ImgURL)
+const imgURL = baseURL.replace('3000','8080')
   return <>
     <span>{value}</span>
-    <Image src={`${ImgURL}view/parchi-secure-22.FAL.png`} alt="" height={500} width={500}/>
+    <Image src={`${imgURL}view/parchi-secure-22.FAL.png`} alt="" height={500} width={500}/>
 
    </>
 }

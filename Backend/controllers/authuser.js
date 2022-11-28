@@ -1,6 +1,5 @@
 const ParchiUser = require('../models/user')
-const path = require('path')
-require('dotenv').config({ path: path.resolve(__dirname, '../.env') })
+require('dotenv').config()
 const cryptoJs = require("crypto-js")
 const jwt = require("jsonwebtoken")
 

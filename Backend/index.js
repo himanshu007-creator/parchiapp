@@ -1,5 +1,4 @@
-const path = require('path')
-require('dotenv').config({ path: path.resolve(__dirname, '../.env') })
+require('dotenv').config()
 const express = require('express')
 const DBconnection = require('./db')
 const Grid = require('gridfs-stream')
@@ -32,13 +31,14 @@ let gfs, gridfsBucket;
    gfs.collection("fs");
    return gfs;
 })
-const port = process.env.PORT || 3000
+const port = process.env.SERVER_PORT || 3000
 app.listen(port, console.log("listening @",port))
 
 app.use('/file', upload)
 
 app.get('/view/:filename', async(req,res)=>{
     await gfs.files.findOne({ filename: req.params.filename}, (err,file)=>{
+        console.log("FILE FOUND: ", file)
         if (!file || file.length === 0) {
             return res.status(400).json({
                 err: err
