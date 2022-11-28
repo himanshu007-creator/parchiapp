@@ -1,8 +1,9 @@
+import { Login } from '@/components/Login'
 import Page from '@/components/page'
 
 
 const Index = ({data}:any) => (
-	<Page title="MONOREPO" />
+	<Login/>
 )
 
 export default Index
