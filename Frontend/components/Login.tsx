@@ -19,8 +19,7 @@ export const Login: React.FC = ()=>{
                 </div>
                 <div className="flex items-baseline justify-between">
                     <button className="px-6 py-2 mt-4 text-white bg-red-400 rounded-lg hover:bg-red-600">Login</button>
-                    <a href="#" className="text-sm text-red-400 hover:underline">Forgot password?</a>
-                    <a href="#" className="text-sm text-red-400 hover:underline">Sign Up?</a>
+                    <a href="#" className="text-xs text-red-400 hover:underline">Sign Up?</a>
                 </div>
             </div>
         </form>
