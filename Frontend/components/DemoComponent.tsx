@@ -10,7 +10,7 @@ export const DemoComponent: React.FC = () => {
   const [token, setToken] = useState('')
   useState(async()=>{
     Cookies.set('act', 'TOKEN HERE')
-    const Tk =  Cookies.get('act')
+    const Tk =  Cookies.get('act') || ''
     console.log(">> TK:  ", Tk)
     setToken(Tk)
   })
