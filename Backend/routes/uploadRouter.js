@@ -43,7 +43,7 @@ Router.post('/upload', [upload.single('file'), verifyToken], async(req,res)=>{
           { username: username },
           { $addToSet: { Documents: fileData } }
         );
-        return res.send({status:"success", data:result})
+        return res.send({status:"success", data:{result}, url:fileUrl})
         }
     else{
       return res.send({status:"failure", data:"ALREADY EXIST"})

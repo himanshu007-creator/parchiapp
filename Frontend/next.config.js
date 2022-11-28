@@ -7,6 +7,6 @@ module.exports = withPWA({
 		runtimeCaching,
 	},
 	images: {
-		domains: ['localhost']
+		domains: ['localhost', 'parchiapp-backend.vercel.app']
 	  }
 })

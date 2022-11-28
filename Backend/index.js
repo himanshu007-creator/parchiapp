@@ -37,9 +37,14 @@ app.use('/file', upload)
 
 app.use('/user', UserRouter)
 
-app.get('/view/:filename',verifyToken, async(req,res)=>{
+app.get('/view/:filename', async(req,res)=>{
+    const token = req.query.q
+    jwt.verify(token, process.env.JWT,  async(err, user) => {
+      if (err) {
+        res.status(404).json(err);
+      }
+       else {
     await gfs.files.findOne({ filename: req.params.filename}, (err,file)=>{
-        console.log("FILE FOUND: ", file)
         if (!file || file.length === 0) {
             return res.status(400).json({
                 err: err
@@ -49,6 +54,8 @@ app.get('/view/:filename',verifyToken, async(req,res)=>{
             const readStream = gridfsBucket.openDownloadStream(file._id);
             readStream.pipe(res);
         }
+      })
+    }
     })
 });
 
