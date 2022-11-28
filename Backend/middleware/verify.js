@@ -11,7 +11,6 @@ require('dotenv').config()
       } else {
         req.user = user;
       }
-      console.log("VERIFICATION PASSED")
       next();
     });
   } else {

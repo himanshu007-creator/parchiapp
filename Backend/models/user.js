@@ -4,7 +4,7 @@ const schema = new mongoose.Schema({
   username: {
     type: String,
     required: true,
-    // index: { unique: true, dropDups: true },
+    index: { unique: true, dropDups: true },
     unique: true,
     dropDups: true 
   },
@@ -21,16 +21,20 @@ const schema = new mongoose.Schema({
     {
         doc:{
             type: String, 
-            required: true, 
+            index: {unique: true, dropDups: true},
+            required: true,
             unique: true,
-            dropDups: true 
         },
         accessHolders:{
             type: [String], 
             default: []
         }
     },
-  ]
+  ], 
+  PatientDocs:{
+    type:[String],
+    default:[]
+  }
 });
 
 const ParchiUser = mongoose.model("ParchiUser", schema);

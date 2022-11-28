@@ -5,8 +5,6 @@ const Grid = require('gridfs-stream')
 const mongoose = require('mongoose')
 const upload = require('./routes/uploadRouter')
 const AuthRouter = require('./routes/AuthRouter')
-const ParchiUser = require('./models/user')
-const cryptoJs = require("crypto-js")
 
 const jwt = require('jsonwebtoken')
 const db = require('./db')
@@ -14,6 +12,7 @@ const app = express()
 
 var bodyParser = require('body-parser')
 const verifyToken = require('./middleware/verify')
+const UserRouter = require('./routes/UserRouter')
  
  
 // create application/json parser
@@ -36,7 +35,9 @@ app.listen(port, console.log("listening @",port))
 
 app.use('/file', upload)
 
-app.get('/view/:filename', async(req,res)=>{
+app.use('/user', UserRouter)
+
+app.get('/view/:filename',verifyToken, async(req,res)=>{
     await gfs.files.findOne({ filename: req.params.filename}, (err,file)=>{
         console.log("FILE FOUND: ", file)
         if (!file || file.length === 0) {
