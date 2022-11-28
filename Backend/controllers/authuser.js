@@ -34,7 +34,7 @@ var refreshTokens= [];
     const Token = {
       username: user.username,
     };
-    const AccessToken = jwt.sign(Token, process.env.JWT, { expiresIn: "10m" });
+    const AccessToken = jwt.sign(Token, process.env.JWT);
     const refreshtoken = jwt.sign(Token, process.env.JWT);
     // const { password, ...others } = user._doc;
     res.status(200).json({ accesstoken: AccessToken, refreshtoken: refreshtoken });
