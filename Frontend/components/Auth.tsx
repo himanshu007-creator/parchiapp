@@ -11,7 +11,16 @@ export const Auth: React.FC<AuthProps> = (props:AuthProps)=>{
     const [role,setRole] = useState('')
     const [error, setError] = useState()
     const [errorVisible, setErrorVisible] = useState(true)
+    const [mode, setMode] = useState('Login')
     const theme = useTheme().systemTheme
+    
+    useEffect(()=>{
+        console.log("CHANGED MODE: ",mode)
+    },[mode])
+
+    useEffect(()=>{
+        setMode(props.mode)
+    },[])
 
     const errorMessages = {
         userExists:{
@@ -25,22 +34,22 @@ export const Auth: React.FC<AuthProps> = (props:AuthProps)=>{
     }
 
     const pageMode = {
-        login:{
+        Login:{
             heading:'Login to your account',
             buttontext:'Login',
             additionalOption:'Sign Up?',
-            additionaloptionLink:"/signup"
+            additionaloptionLink:"Signup"
 
         },
         Signup:{
             heading:'Signup for new account',
             buttontext:'Create',
-            additionalOption:'Log in?',
-            additionaloptionLink:"/login"
+            additionalOption:'Already have an account?',
+            additionaloptionLink:"Login"
         }
     }
 
-    const selectedmode = props.mode==='login'?  pageMode.login :  pageMode.Signup
+    const selectedmode = mode==='Login'?  pageMode.Login :  pageMode.Signup
 
     useEffect(() => {
         const timeId = setTimeout(() => {
@@ -71,7 +80,7 @@ export const Auth: React.FC<AuthProps> = (props:AuthProps)=>{
                             <input type="password" placeholder="Password"
                                 className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-red-400"/>
                 </div>
-                {props.mode==='signup'?
+                {mode==='Signup'?
                  <div className="flex flex-wrap mt-4 "  onChange={(e)=>{console.log((e.target as HTMLInputElement).value)}}>
                  <div className="flex items-center mr-4 cursor-pointer">
                      <input id="red-radio"  type="radio" value="Doctor" name="colored-radio" className="w-4 h-4 text-red-600 bg-gray-100 border-gray-300 focus:ring-red-500 dark:focus:ring-red-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"/>
@@ -89,7 +98,7 @@ export const Auth: React.FC<AuthProps> = (props:AuthProps)=>{
                    
                 <div className="flex items-baseline justify-between">
                     <button className="px-6 py-2 mt-4 text-white bg-red-400 rounded-lg hover:bg-red-600">{selectedmode.buttontext}</button>
-                    <a href={selectedmode.additionaloptionLink} className="text-xs text-red-400 hover:underline">{selectedmode.additionalOption}</a>
+                    <p onClick={()=>{setMode(selectedmode.additionaloptionLink); console.log(">>> HEY:", mode)}}className="text-xs text-red-400 hover:underline">{selectedmode.additionalOption}</p>
                 </div>
             </div>
         </form>
