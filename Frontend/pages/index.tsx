@@ -3,7 +3,7 @@ import Page from '@/components/page'
 
 
 const Index = ({data}:any) => (
-	<Auth mode="login"/>
+	<Auth mode="Login"/>
 )
 
 export default Index
