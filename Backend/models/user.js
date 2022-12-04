@@ -20,10 +20,7 @@ const schema = new mongoose.Schema({
   Documents: [
     {
         doc:{
-            type: String, 
-            index: {unique: true, dropDups: true},
-            required: true,
-            unique: true,
+            type: String,
         },
         accessHolders:{
             type: [String], 
@@ -33,8 +30,12 @@ const schema = new mongoose.Schema({
   ], 
   PatientDocs:[
     {
-      file: String,
-      patient: String
+      file: {
+        type: String
+      },
+      patient:{ 
+        type:String
+      }
     }
   ]
 });
