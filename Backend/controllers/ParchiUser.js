@@ -148,6 +148,7 @@ async function addDocAccessToFile(req, res) {
   var newArr;
   var DocArray;
   if(req.body.action === 'add'){
+    console.log(DoctorFound.PatientDocs)
     let isAccessAlreadyThere = DoctorFound.PatientDocs.find(o => o.file === req.body.doc);
     if(isAccessAlreadyThere){
       return res.status(200).json({"status":"alreadyHasAccess"});
@@ -160,22 +161,22 @@ async function addDocAccessToFile(req, res) {
       newArr = Array.from(arr)
       DocArray = Array.from(darr)
       }
-      if(req.body.action === 'delete'){
-        newArr = ans.accessHolders.filter(i=> i!=req.body.doctor)
-        DocArray = DoctorFound.PatientDocs.filter(i=> i.doc!=req.body.doc)
-        console.log(">> DELETE DOC ARRAY: ",DocArray )
-      }
-      if (found) {
-        var result = await ParchiUser.update(
-          { username: username, "Documents.doc": req.body.doc },
-          { $addToSet: {"Documents.$.accessHolders": newArr}}
-        );
-        var resultDoc = await ParchiUser.update(
-          { _id: req.body.doctor },
-          {$addToSet: {PatientDocs: DocArray}}
-        );
-        res.status(200).json({result, resultDoc});
-      }
+  }
+  else 
+  if(req.body.action === 'delete'){
+      newArr = ans.accessHolders.filter(i=> i!=req.body.doctor)
+      DocArray = DoctorFound.PatientDocs.filter(i=> i.file!=req.body.doc)
+  }
+    if (found) {
+     var result = await ParchiUser.update(
+        { username: username, "Documents.doc": req.body.doc },
+        { $set: {"Documents.$.accessHolders": newArr}}
+      );
+      var resultDoc = await ParchiUser.update(
+        { _id: req.body.doctor },
+        {$set: {PatientDocs: DocArray}}
+      );
+      res.status(200).json({result, resultDoc});
     }
 }
 
