@@ -66,14 +66,22 @@ app.get('/view/:filename', async(req,res)=>{
 app.use("/api/auth", AuthRouter)
 
 // for file viewing
-app.delete('/view/:filename', async(req,res)=>{
-    try{
+app.get('/remove/:filename', async(req,res)=>{
+    const token = req.query.q
+    jwt.verify(token, process.env.JWT,  async(err, user) => {
+      if (err) {
+        res.status(404).json(err);
+      }
+       else {
+        try{
         const file = await gfs.files.deleteOne({filename: req.params.filename});
         res.send('file deleted successfully')
+        }
+        catch(err){
+            res.send(err)
+        }
     }
-    catch(err){
-        res.send(err)
-    }
+   })
 })
 app.get('/', (req, res) => {
     res.send('hello world')

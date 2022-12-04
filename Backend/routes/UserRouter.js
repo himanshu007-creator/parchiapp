@@ -4,13 +4,15 @@ const [
 //   createUrl,
   getFiles,
   getDoctors,
-  addDocAccessToFile
+  addDocAccessToFile,
+  getPatientFiles
 //   deleteLink,
 //   searchLinks,
 //   updateLink,
 ] = require("../controllers/ParchiUser");
 // UserRouter.post("/create", verifyToken, createUrl);
 UserRouter.get("/files", verifyToken, getFiles);
+UserRouter.get("/pfiles", verifyToken, getPatientFiles);
 UserRouter.get("/doctors", verifyToken, getDoctors);
 UserRouter.post("/addDoc",verifyToken,addDocAccessToFile)
 

@@ -16,7 +16,7 @@ const schema = new mongoose.Schema({
     type: String,
     enum: ["Doctor", "Patient"], 
     required: true
-},
+  },
   Documents: [
     {
         doc:{
@@ -31,11 +31,15 @@ const schema = new mongoose.Schema({
         }
     },
   ], 
-  PatientDocs:{
-    type:[String],
-    default:[]
-  }
+  PatientDocs:[
+    {
+      file: String,
+      patient: String
+    }
+  ]
 });
+
+
 
 const ParchiUser = mongoose.model("ParchiUser", schema);
 
