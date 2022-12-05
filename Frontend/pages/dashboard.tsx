@@ -1,3 +1,4 @@
+import Loading from '@/components/Loading';
 import { useTheme } from 'next-themes';
 import React, {useState} from 'react';
 
@@ -6,6 +7,7 @@ const Dashboard: React.FC = () => {
   const theme = useTheme().systemTheme
 
   return <>
+  <Loading/>
   <div className={`flex flex-wrap h-screen bg-gray-100 ${theme==='dark' ? 'bg-zinc-900':'bg-gray-100 overflow-hidden'}`}>
     <div className={`bg-red-500 w-full h-16 px-4 rounded-b-lg ${theme==='dark' ? 'shadow-red-500/50 shadow-lg':''}`}>
       {/* {header} */}

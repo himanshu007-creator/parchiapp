@@ -75,7 +75,7 @@ app.get('/remove/:filename', async(req,res)=>{
        else {
         try{
         const file = await gfs.files.deleteOne({filename: req.params.filename});
-        res.send('file deleted successfully')
+        res.status(204).json({result:"File deleted successfully"})
         }
         catch(err){
             res.send(err)
