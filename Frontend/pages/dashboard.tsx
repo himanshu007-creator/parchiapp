@@ -9,7 +9,7 @@ const Dashboard: React.FC = () => {
   const theme = useTheme().systemTheme
   const [logout, setLogoutVisible] = useState(false)
   const [loading, setLoading] = useState(true)
-  const Shimmers = new Array(5).fill(<Shimmer/>)
+  const Shimmers = new Array(6).fill(<Shimmer/>)
 
   useEffect(()=>{
     setTimeout(() => {
@@ -18,7 +18,7 @@ const Dashboard: React.FC = () => {
   },[])
 
   return <>
-    {/* <Loading/> */}
+  <Loading/>
     <div className={`flex flex-wrap h-screen bg-gray-100 ${theme === 'dark' ? 'bg-zinc-900' : 'bg-gray-100 overflow-hidden'}`}>
       <div className={`bg-red-500 w-full h-16 px-4 rounded-b-lg ${theme === 'dark' ? 'shadow-red-500/50 shadow-lg' : ''}`}>
         <div onMouseEnter={() => { console.log("HOVER") }} onClickCapture={() => { setLogoutVisible(!logout) }} onMouseLeave={() => { setTimeout(() => { setLogoutVisible(false) }, 2500) }} className={`group br-1 p-2 text-2xl bg-gray-300 rounded-lg  hover:bg-gray-500 w-16 h-full float-right`}>
@@ -61,8 +61,8 @@ const Dashboard: React.FC = () => {
                   // eslint-disable-next-line react/jsx-key
                   <FileOptions
                     show={i === 1}>
-                    <div className='p-2 lg:px-4 lg: py-2 my-3 w-full h-28 bg-red-200 rounded-lg flex'>
-                      <Image src="/img/musk.jpeg" alt='' className='h-24 w-48 border-2' width={88} height={48} />
+                    <div className='p-2 lg:px-4 lg: py-2 my-3 w-full h-28 bg-red-200 rounded-lg flex '>
+                      <Image src="/img/musk.jpeg" alt='' className='h-24 w-48 border-2 fixed ' width={88} height={48} />
                       <div className='w-full h-full flex flex-wrap px-4'>
                         <p className='font-bold font-sans w-full'>AA meri jaan</p>
                         <p className='font-medium'>Access Holders: Elon Musk</p>

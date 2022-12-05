@@ -1,5 +1,6 @@
 import { useTheme } from "next-themes"
 import { useEffect, useState } from "react"
+import Loading from "./Loading"
 
 interface AuthProps{
     mode: string
@@ -64,6 +65,7 @@ export const Auth: React.FC<AuthProps> = (props:AuthProps)=>{
 
     return (
         <>
+        
         <div className={`flex items-center justify-center h-screen bg-gray-100 ${theme==='dark' ? 'bg-zinc-900':'bg-gray-100'}`}>
     <div className={`pr-8 pl-8 pb-8 pt-4 py-6 mt-2 text-left  rounded-xl  ${theme==='dark' ? 'bg-transparent border-4 border-red-400 shadow-red-200':'bg-white'} shadow-lg`}>
         <p className={`w-full h-6 items-center justify-center text-center font-medium mb-2 bg-${errorMessages.userExists.color}-200`}>{errorMessages.userExists.message}</p>
