@@ -1,8 +1,8 @@
-import Loading from '@/components/Loading'
+import Dialogue from '@/components/Dialogue'
 
 
 const App = () => (
-    <Loading/>
+    <Dialogue show={true}/>
 )
 
 export default App
