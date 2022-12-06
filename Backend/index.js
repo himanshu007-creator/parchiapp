@@ -62,7 +62,7 @@ app.get('/view/:filename', async(req,res)=>{
  * Auth Routes
  */
 // for Authentication
-app.use("/api/auth",(res, next) => {res.header({"Access-Control-Allow-Origin": "*"}); next();}, AuthRouter)
+app.use("/api/auth", AuthRouter)
 
 // for file viewing
 app.get('/remove/:filename', async(req,res)=>{
