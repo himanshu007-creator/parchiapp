@@ -35,10 +35,10 @@ export const Auth: React.FC<AuthProps> = (props:AuthProps)=>{
         fetch("http://parchiapp-backend.vercel.app/api/auth/login", { 
             method: 'POST', 
             mode: 'no-cors',
-            headers: new Headers({
-                'Content-Type': 'application/json',
-                'Accept': 'application/json',
-            }),
+            // headers: new Headers({
+            //     'Content-Type': 'application/json',
+            //     'Accept': 'application/json',
+            // }),
             body: JSON.stringify({username: 'pp1',password:'24q'})
         })
         .then(response => response.json())
