@@ -5,6 +5,8 @@ import Cookies from 'js-cookie'
 const loggedInStatus = ()=>{
     const LSflag = ls.get('parchiUserLoggedIn')
     const CookieFlag = Cookies.get('ParchiToken')
+    return LSflag && CookieFlag
+
 }
 
-module.exports = [loggedInStatus]
+export default loggedInStatus
