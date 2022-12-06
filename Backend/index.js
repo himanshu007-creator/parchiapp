@@ -14,10 +14,9 @@ var bodyParser = require('body-parser')
 const verifyToken = require('./middleware/verify')
 const UserRouter = require('./routes/UserRouter')
  
- 
+
 // create application/json parser
 var jsonParser = bodyParser.json()
-  
 app.use(jsonParser)
 DBconnection()
 const conn = mongoose.connection;
@@ -63,7 +62,7 @@ app.get('/view/:filename', async(req,res)=>{
  * Auth Routes
  */
 // for Authentication
-app.use("/api/auth", AuthRouter)
+app.use("/api/auth",(res, next) => {res.header({"Access-Control-Allow-Origin": "*"}); next();}, AuthRouter)
 
 // for file viewing
 app.get('/remove/:filename', async(req,res)=>{
