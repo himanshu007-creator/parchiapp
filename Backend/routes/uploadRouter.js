@@ -25,6 +25,7 @@ Router.post('/upload', [upload.single('file'), verifyToken], async(req,res)=>{
     "doc":'',
     "accessHolders":[userfound._id]
   }
+  const ReqProtocol = req.get('host')==='localhost'? 'http':'https'
   var docs = await userfound.Documents;
   var valueArr = docs.map(function (item) {
     return item.doc;
@@ -34,7 +35,7 @@ Router.post('/upload', [upload.single('file'), verifyToken], async(req,res)=>{
         if(!file || file.length===0){
     if(req.file === undefined || req.file === null) return res.send("NO FILES FOUND")
     
-    const fileUrl = `${req.protocol + '://' + req.get('host')}/view/parchi-secure-${acr}-${fileNameEdited}`
+    const fileUrl = `${ReqProtocol + '://' + req.get('host')}/view/parchi-secure-${acr}-${fileNameEdited}`
     var isThere = valueArr.some(function (i) {
       return i === fileUrl;
     });

@@ -32,7 +32,7 @@ export const Auth: React.FC<AuthProps> = (props:AuthProps)=>{
         console.log(">>>E: ", username, " >>> P: ",password, " >>>R: ", role)
        if(isFormValid){ 
         setLoading(true)
-        fetch("http://parchiapp-backend.vercel.app/api/auth/login", { 
+        fetch("https://parchiapp-backend.vercel.app/api/auth/login", { 
             method: 'POST', 
             mode: 'no-cors',
             // headers: new Headers({
