@@ -37,7 +37,7 @@ export const Auth: React.FC<AuthProps> = (props:AuthProps)=>{
         const handleFetchData = async () => {
             const response = await fetch("https://parchiapp-backend.vercel.app/api/auth/login",{ 
                 method: 'POST', 
-                // mode: 'no-cors',
+                mode: 'no-cors',
                 // headers: new Headers({
                 //     'Content-Type': 'application/json',
                 //     'Accept': 'application/json',
