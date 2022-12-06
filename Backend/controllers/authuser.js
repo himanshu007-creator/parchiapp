@@ -24,11 +24,16 @@ var refreshTokens= [];
   });
 }
  async function loginUser(req, res){
+  console.log(req.body)
   try {
+    console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>HERE")
     const user = await ParchiUser.findOne({ username: req.body.username });
-    !user && res.status(401).json("Wrong credentials");
-
-    const hashpassword = cryptoJs.AES.decrypt(user.password, process.env.JWT);
+    console.log(user)
+    if(!user){
+      return res.status(401).json("Wrong credentials");
+    } 
+    else{
+      const hashpassword = cryptoJs.AES.decrypt(user.password, process.env.JWT);
     const Origpassword = hashpassword.toString(cryptoJs.enc.Utf8);
     Origpassword !== req.body.password && res.status(401).json({status:"failure",details: "wrong credentials"});
     const Token = {
@@ -38,8 +43,10 @@ var refreshTokens= [];
     const refreshtoken = jwt.sign(Token, process.env.JWT);
     // const { password, ...others } = user._doc;
     res.status(200).json({ accesstoken: AccessToken, refreshtoken: refreshtoken });
+    }
+    
   } catch (err) {
-    res.status(400).json({"ERROR BKL: ": err});
+    return res.status(400).json({"ERROR BKL: ": err});
   }
 }
  async function registerUser(req, res) {

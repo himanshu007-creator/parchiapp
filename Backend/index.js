@@ -9,9 +9,9 @@ const AuthRouter = require('./routes/AuthRouter')
 const jwt = require('jsonwebtoken')
 const db = require('./db')
 const app = express()
+var cors = require('cors')
 
 var bodyParser = require('body-parser')
-const verifyToken = require('./middleware/verify')
 const UserRouter = require('./routes/UserRouter')
  
 
@@ -30,6 +30,8 @@ let gfs, gridfsBucket;
    return gfs;
 })
 const port = process.env.SERVER_PORT || 3000
+app.options('*', cors()) // include before other routes
+
 app.listen(port, console.log("listening @",port))
 
 app.use('/file', upload)
@@ -77,7 +79,7 @@ app.get('/remove/:filename', async(req,res)=>{
         res.status(204).json({result:"File deleted successfully"})
         }
         catch(err){
-            res.send(err)
+            return res.send(err)
         }
     }
    })

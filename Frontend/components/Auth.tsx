@@ -30,24 +30,46 @@ export const Auth: React.FC<AuthProps> = (props:AuthProps)=>{
     const submit = ()=>{
         console.log("HERE")
         console.log(">>>E: ", username, " >>> P: ",password, " >>>R: ", role)
+        const bdy = JSON.stringify({username: "pp1",password:"24q"})
+        console.log("BDY: ", bdy)
        if(isFormValid){ 
         setLoading(true)
-        fetch("https://parchiapp-backend.vercel.app/api/auth/login", { 
-            method: 'POST', 
-            mode: 'no-cors',
-            // headers: new Headers({
-            //     'Content-Type': 'application/json',
-            //     'Accept': 'application/json',
-            // }),
-            body: JSON.stringify({username: 'pp1',password:'24q'})
-        })
-        .then(response => response.json())
-        .then(json => console.log(json))
-        .catch((err)=>{
-            console.log(">>> ERR: ",err)
-        })
-        .finally(()=>{setLoading(false)})
-       } 
+        const handleFetchData = async () => {
+            const response = await fetch("http://localhost:3000/api/auth/login",{ 
+                method: 'POST', 
+                // mode: 'no-cors',
+                // headers: new Headers({
+                //     'Content-Type': 'application/json',
+                //     'Accept': 'application/json',
+                // }),
+                body: bdy
+            });
+            const data = await response.json();
+            console.log(data);
+        }
+
+        handleFetchData()
+    //     fetch("http://localhost:3000/api/auth/login", { 
+    //         method: 'POST', 
+    //         // mode: 'no-cors',
+    //         // headers: new Headers({
+    //         //     'Content-Type': 'application/json',
+    //         //     'Accept': 'application/json',
+    //         // }),
+    //         body:JSON.stringify({username: "pp1",password:"24q"})
+    //     })
+    //     .then(response => {
+    //         return response.text()
+    //       })
+    //       .then(data => {
+    //         JSON.parse(data).json()
+    //       })
+    //       .catch((err) => {
+    //         console.log(">>> ERR: ",err)
+    //       })
+    //     .finally(()=>{setLoading(false)})
+    //    } 
+       }
     }
    
 
