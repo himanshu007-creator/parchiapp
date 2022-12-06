@@ -11,6 +11,12 @@ const db = require('./db')
 const app = express()
 var cors = require('cors')
 
+var corsOptionsDelegate = function (req, callback) {
+  var corsOptions;
+    corsOptions = { origin: true } // disable CORS for this request
+  callback(null, corsOptions) // callback expects two parameters: error and options
+}
+
 var bodyParser = require('body-parser')
 const UserRouter = require('./routes/UserRouter')
  
@@ -30,8 +36,7 @@ let gfs, gridfsBucket;
    return gfs;
 })
 const port = process.env.SERVER_PORT || 3000
-app.options('*', cors()) // include before other routes
-
+app.use(cors(corsOptionsDelegate))
 app.listen(port, console.log("listening @",port))
 
 app.use('/file', upload)
