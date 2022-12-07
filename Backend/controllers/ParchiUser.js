@@ -131,7 +131,6 @@ async function getDoctors(req, res) {
 }
 
 async function addDocAccessToFile(req, res) {
-  const rm = req.params.short;
   const username = req.user.username;
   const userfound= await ParchiUser.findOne({ username: username});
   const DoctorFound= await ParchiUser.findOne({ _id: req.body.doctor});

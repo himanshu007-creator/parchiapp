@@ -8,19 +8,62 @@ import * as ls from "local-storage";
 import Cookies from 'js-cookie'
 import Router from 'next/router';
 import loggedInStatus from '@/utils/loggedin';
+import { Document, Page } from 'react-pdf';
+import FileRC from '@/components/File';
+
 
 
 const Dashboard: React.FC = () => {
   const theme = useTheme().systemTheme
+  const [files,setFiles] = useState<any>([])
+  const [Token,setToken] = useState('')
   const [logout, setLogoutVisible] = useState(false)
   const [loading, setLoading] = useState(true)
+  const [refetch, setRefetch] = useState(false)
   const Shimmers = new Array(6).fill(<Shimmer/>)
 
+  const handleFetchData = () => {
+    fetch('https://parchiapp-backend.vercel.app/user/files',{ 
+        method: 'get', 
+        headers: new Headers({
+            'token': `Bearer ${Token}`
+        }),
+    })
+    .then(data=>  data.json()
+    )
+    .then((data) => {
+      setFiles(data)
+    })
+    .finally(()=>{
+      setLoading(false)
+    })
+  }
+
   useEffect(()=>{
+    // document.addEventListener('contextmenu', (e) => {
+    //   e.preventDefault();
+    // });
 		if(!loggedInStatus()){
 			Router.push("/")
 		}
-	},[])
+    else{
+      const cookies = Cookies.get()
+      setToken(cookies.ParchiToken)
+      getFiles()
+    }
+	},[Token])
+
+
+  const getFiles=()=>{
+    setLoading(true)
+      if(Token !==''){
+        handleFetchData()
+      }
+  }
+  useEffect(()=>{
+    getFiles()
+    console.log(">>> FILES: ",files)
+  },[Token])
 
 
 
@@ -32,6 +75,7 @@ const Dashboard: React.FC = () => {
 
 
   const logoutSubmit = ()=>{
+    setLoading(true)
     ls.clear()
     Cookies.remove('ParchiToken')
     setTimeout(()=>{
@@ -69,37 +113,55 @@ const Dashboard: React.FC = () => {
             <></>
         }
         <div className='w-full h-full  lg:p-8 bg-green-100 p-3'>
-          <button onClick={() => { console.log("hey") }} className='lg:mb-4 w-2/6 lg:w-1/6 h-8 lg:h-6 lg:h-12 border-2  border-black float-right rounded-lg lg:px-8 lg:py-2 px-2 lg:mx-2 relative right-4 bg-cyan-500'>
+          {/* <button onClick={() => { console.log("hey") }} className='lg:mb-4 w-2/6 lg:w-1/6 h-8 lg:h-6 lg:h-12 border-2  border-black float-right rounded-lg lg:px-8 lg:py-2 px-2 lg:mx-2 relative right-4 bg-cyan-500'>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 float-left">
               <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
             </svg>
-            <p className='text-sm lg:text-xl py-1.5 lg:py-0 font-medium'>Add file</p>
-          </button>
+            <input type="file" className='-top-4 text-sm lg:text-xl py-1.5 lg:py-0 font-medium' title=' '/>
+          </button> */}
 
-          <div className='mt-10 px-4  border-2 border-black bg-gray-900 h-full w-full overflow-x-hidden overflow-y-scroll no-scrollbar'>
+          <div className='mt-10 px-4  border-2 border-black bg-gray-900 h-full w-full pb-20 overflow-x-hidden overflow-y-scroll no-scrollbar'>
             {
               loading ?
               Shimmers
               :
-              [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((i) => {
+              files.map((i: any) => {
+                i.doc = i.doc.replace('https','http')
                 return (
                   // eslint-disable-next-line react/jsx-key
                   <FileOptions
-                    show={i === 1}
+                    show={files.indexOf(i)===0}
+                    file={i.doc}
+                    Tok={Token}
                     >
                     <div className={`p-2 lg:px-4 lg: py-2 my-3 w-full h-28 ${theme !== 'dark' ?'bg-red-200':'bg-black'} rounded-lg flex`}>
                       <Image src="/img/musk.jpeg" alt='' className='h-24 w-48 border-2 fixed ' width={100} height={48} />
                       <div className='w-full h-full flex flex-wrap px-4'>
-                        <p className='font-bold font-sans w-full'>AAAAAA</p>
-                        <p className='font-medium'>Access Holders: Elon Musk</p>
+                        <p className='font-bold font-sans w-3/6 truncate'>{i.doc.split('.')[0].split('secure-')[1]}</p>
+                        <p className='font-medium w-full'>Access Holders: Elon Musk</p>
                       </div>
                     </div>
+
+                    {/* {
+                      i.doc.includes('pdf')?
+                      <>
+                      <object data={`${i.doc}?q=${Token}`} type="application/pdf" width="100%" height="700px">
+      <p>Alternative text - include a link <a href="http://africau.edu/images/default/sample.pdf">to the PDF!</a></p>
+  </object>
+                       
+                      </>
+                     
+                      :
+                      <img src={`${i.doc}?q=${Token}`} alt='' width={100} height={100}/>
+
+              } */}
                   </FileOptions>
                 )
+                
               })
+              
             }
-                      <Dialogue show={loading}/>
-
+                                <Dialogue show={loading}/>
           </div>
           
         </div>

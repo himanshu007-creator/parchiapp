@@ -34,6 +34,7 @@ export const Auth: React.FC<AuthProps> = (props:AuthProps)=>{
             body = JSON.stringify({username: username,password:password,role:role})
             fetchUrl = 'https://parchiapp-backend.vercel.app/api/auth/register'
         }
+        console.log(">>> BODY: ",body)
        if(isFormValid){ 
         setLoading(true)
         const handleFetchData = () => {
@@ -51,11 +52,18 @@ export const Auth: React.FC<AuthProps> = (props:AuthProps)=>{
                     Cookies.set('ParchiToken', data.accesstoken)
                     setUsername('')
                     setPassword('')
-                    setMsgClr('green')
-                    messageHandler('Logged in Successfully')
-                    setTimeout(()=>{
-                        Router.push('/dashboard')
-                },1200)} 
+                    if(data==="Wrong credentials"){
+                        setMsgClr('red')
+                        messageHandler('Wrong credentials')
+                    }
+                    else{
+                        setMsgClr('green')
+                        messageHandler('Logged in Successfully')
+                        setTimeout(()=>{
+                            Router.push('/dashboard')
+                    },1200)
+                    }
+            } 
                 else{
                     setUsername('')
                     setPassword('')
