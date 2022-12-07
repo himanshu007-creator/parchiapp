@@ -6,6 +6,14 @@ const Router = express.Router()
 const ParchiUser = require('../models/user')
 const verifyToken = require('../middleware/verify')
 
+var cors = require('cors')
+Router.use(cors(corsOptionsDelegate))
+
+var corsOptionsDelegate = function (req, callback) {
+  var corsOptions;
+    corsOptions = { origin: true } // disable CORS for this request
+  callback(null, corsOptions) // callback expects two parameters: error and options
+}
 
 const conn = mongoose.connection;
 let gfs, gridfsBucket;

@@ -81,13 +81,15 @@ app.get('/remove/:filename', async(req,res)=>{
        else {
         try{
         const file = await gfs.files.deleteOne({filename: req.params.filename});
-        res.status(204).json({result:"File deleted successfully"})
+        console.log(file)
+        return res.send(file)
         }
         catch(err){
-            return res.send(err)
+            return res.send({deletedCount:0})
         }
     }
-   })
+   }
+   )
 })
 app.get('/', (req, res) => {
     res.send('hello world')
