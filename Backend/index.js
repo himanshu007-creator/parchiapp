@@ -56,9 +56,9 @@ app.get('/view/:filename', async(req,res)=>{
                 err: err
             })
         }
-        if (file.contentType === 'image/jpeg' || file.contentType === 'image/png' || file.contentType === 'image/jpg' || file.contentType === 'application.pdf') {
+        if (file.contentType === 'image/jpeg' || file.contentType === 'image/png' || file.contentType === 'image/jpg' || file.contentType === 'application/pdf') {
             const readStream = gridfsBucket.openDownloadStream(file._id);
-            readStream.pipe(res);
+            return readStream.pipe(res);
         }
       })
     }
@@ -71,7 +71,7 @@ app.get('/view/:filename', async(req,res)=>{
 // for Authentication
 app.use("/api/auth", AuthRouter)
 
-// for file viewing
+// for file removing
 app.get('/remove/:filename', async(req,res)=>{
     const token = req.query.q
     jwt.verify(token, process.env.JWT,  async(err, user) => {

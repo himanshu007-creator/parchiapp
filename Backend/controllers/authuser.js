@@ -26,7 +26,6 @@ var refreshTokens= [];
  async function loginUser(req, res){
   console.log(req.body)
   try {
-    console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>HERE")
     const user = await ParchiUser.findOne({ username: req.body.username });
     console.log(user)
     if(!user){

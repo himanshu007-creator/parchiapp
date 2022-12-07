@@ -98,7 +98,7 @@ const Dashboard: React.FC = () => {
                 )
               })
             }
-                      <Dialogue show={true}/>
+                      <Dialogue show={loading}/>
 
           </div>
           

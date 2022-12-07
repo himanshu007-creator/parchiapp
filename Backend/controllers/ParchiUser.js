@@ -156,7 +156,6 @@ async function addDocAccessToFile(req, res) {
     else{
       const arr = new Set([req.body.doctor].concat(ans.accessHolders))
       const drr = DoctorFound.PatientDocs.filter((v,i,a)=>a.findIndex(v2=>(JSON.stringify(v2) === JSON.stringify(v)))===i)
-      console.log(">>>",drr)
       const darr = new Set([{patient:req.user.username,file:req.body.doc}].concat(drr))
       newArr = Array.from(arr)
       DocArray = Array.from(darr)

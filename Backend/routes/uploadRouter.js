@@ -19,7 +19,7 @@ let gfs, gridfsBucket;
 
 Router.post('/upload', [upload.single('file'), verifyToken], async(req,res)=>{
   const username =  req.user.username;
-  const acr = username.slice(0,3)
+  // const acr = username.slice(0,3)
   const userfound=  await ParchiUser.findOne({ username: username });
   const fileData={
     "doc":'',
@@ -35,7 +35,7 @@ Router.post('/upload', [upload.single('file'), verifyToken], async(req,res)=>{
         if(!file || file.length===0){
     if(req.file === undefined || req.file === null) return res.send("NO FILES FOUND")
     
-    const fileUrl = `${ReqProtocol + '://' + req.get('host')}/view/parchi-secure-${acr}-${fileNameEdited}`
+    const fileUrl = `${ReqProtocol + '://' + req.get('host')}/view/parchi-secure-${fileNameEdited}`
     var isThere = valueArr.some(function (i) {
       return i === fileUrl;
     });
