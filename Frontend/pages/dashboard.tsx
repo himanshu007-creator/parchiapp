@@ -8,8 +8,6 @@ import * as ls from "local-storage";
 import Cookies from 'js-cookie'
 import Router from 'next/router';
 import loggedInStatus from '@/utils/loggedin';
-import { Document, Page } from 'react-pdf';
-import FileRC from '@/components/File';
 
 
 
