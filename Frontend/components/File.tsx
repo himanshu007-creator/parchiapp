@@ -42,10 +42,10 @@ const FileRC:React.FC<FileProps> = ({file,Tok}:FileProps)=>{
                             file.includes('.pdf')
                             ?
                             <>
-                            <object width="100%" height="650" type="application/pdf" data={fetchURL+'#toolbar=0&navpanes=0&scrollbar=0'} onMouseDown={()=>false} id="pdf_content" >
+                            <object width="100%" height="650" type="application/pdf" data={'https://docs.google.com/gview?embedded=true&url='+fetchURL+'#toolbar=0&navpanes=0&scrollbar=0'} onMouseDown={()=>false} id="pdf_content" >
                                 <p>Insert your error message here, if the PDF cannot be displayed.</p>
                             </object>
-                            <embed src={fetchURL+'#toolbar=0&navpanes=0&scrollbar=0'} type="application/pdf" width="100%" height="700px" onMouseDown={()=>alert('not allowed')} id="OBG" />
+                            {/* <embed src={fetchURL+'#toolbar=0&navpanes=0&scrollbar=0'} type="application/pdf" width="100%" height="700px" onMouseDown={()=>alert('not allowed')} id="OBG" /> */}
                             </>
                             :
                             <>
