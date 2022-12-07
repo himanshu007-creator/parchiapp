@@ -42,12 +42,15 @@ const FileRC:React.FC<FileProps> = ({file,Tok}:FileProps)=>{
                             file.includes('.pdf')
                             ?
                             <>
+                            <object width="100%" height="650" type="application/pdf" data={fetchURL+'#toolbar=0&navpanes=0&scrollbar=0'} onMouseDown={()=>false} id="pdf_content" >
+                                <p>Insert your error message here, if the PDF cannot be displayed.</p>
+                            </object>
                             <embed src={fetchURL+'#toolbar=0&navpanes=0&scrollbar=0'} type="application/pdf" width="100%" height="700px" onMouseDown={()=>alert('not allowed')} id="OBG" />
                             </>
                             :
                             <>
                             
-                            <Image src={`${fetchURL}`} alt='' width={1800} height={800} className="relative lg:pt-0 p-6 top-[40px]" />
+                            <Image src={fetchURL} alt='' width={1800} height={800} className="relative lg:pt-0 p-6 top-[40px]" />
                             </>
                             
                         }
