@@ -26,3 +26,18 @@ body {
 input[type='file'] {
 	color: rgba(0, 0, 0, 0)
   }
+
+  #toolbar {
+    align-items: center;
+    background-color: var(--viewer-pdf-toolbar-background-color);
+    color: #fff;
+    display: flex;
+    height: var(--viewer-pdf-toolbar-height);
+    padding: 0 16px;
+    display: none;
+}
+
+#ObJ{
+	display: none;
+
+}

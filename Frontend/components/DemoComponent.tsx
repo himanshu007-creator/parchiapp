@@ -11,11 +11,9 @@ export const DemoComponent: React.FC = () => {
   useState(async()=>{
     Cookies.set('act', 'TOKEN HERE')
     const Tk =  Cookies.get('act') || ''
-    console.log(">> TK:  ", Tk)
     setToken(Tk)
   })
   const Token = Cookies.get('act')
-  console.log(">>> TOKEN: ",token )
   const [value, setValue] = useState(0);
   const { asPath } = useRouter();
   const origin =

@@ -147,7 +147,6 @@ async function addDocAccessToFile(req, res) {
   var newArr;
   var DocArray;
   if(req.body.action === 'add'){
-    console.log(DoctorFound.PatientDocs)
     let isAccessAlreadyThere = DoctorFound.PatientDocs.find(o => o.file === req.body.doc);
     if(isAccessAlreadyThere){
       return res.status(200).json({"status":"alreadyHasAccess"});

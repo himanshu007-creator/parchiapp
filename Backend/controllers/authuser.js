@@ -24,10 +24,8 @@ var refreshTokens= [];
   });
 }
  async function loginUser(req, res){
-  console.log(req.body)
   try {
     const user = await ParchiUser.findOne({ username: req.body.username });
-    console.log(user)
     if(!user){
       return res.status(401).json("Wrong credentials");
     } 

@@ -8,19 +8,23 @@ import * as ls from "local-storage";
 import Cookies from 'js-cookie'
 import Router from 'next/router';
 import loggedInStatus from '@/utils/loggedin';
+import FileRC from '@/components/File';
+import { setInterval } from 'timers';
 
 
 
 const Dashboard: React.FC = () => {
   const theme = useTheme().systemTheme
+  const [filePOV,setFilePOV] = useState('')
   const [files,setFiles] = useState<any>([])
   const [Token,setToken] = useState('')
   const [logout, setLogoutVisible] = useState(false)
-  const [loading, setLoading] = useState(true)
-  const [refetch, setRefetch] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [shimmers, setShimmers] = useState(false)
   const Shimmers = new Array(6).fill(<Shimmer/>)
 
   const handleFetchData = () => {
+    setShimmers(true)
     fetch('https://parchiapp-backend.vercel.app/user/files',{ 
         method: 'get', 
         headers: new Headers({
@@ -34,9 +38,9 @@ const Dashboard: React.FC = () => {
     })
     .finally(()=>{
       setLoading(false)
+      setShimmers(false)
     })
   }
-
   useEffect(()=>{
     // document.addEventListener('contextmenu', (e) => {
     //   e.preventDefault();
@@ -52,6 +56,7 @@ const Dashboard: React.FC = () => {
 	},[Token])
 
 
+
   const getFiles=()=>{
     setLoading(true)
       if(Token !==''){
@@ -60,7 +65,6 @@ const Dashboard: React.FC = () => {
   }
   useEffect(()=>{
     getFiles()
-    console.log(">>> FILES: ",files)
   },[Token])
 
 
@@ -111,16 +115,16 @@ const Dashboard: React.FC = () => {
             <></>
         }
         <div className='w-full h-full  lg:p-8 bg-green-100 p-3'>
-          {/* <button onClick={() => { console.log("hey") }} className='lg:mb-4 w-2/6 lg:w-1/6 h-8 lg:h-6 lg:h-12 border-2  border-black float-right rounded-lg lg:px-8 lg:py-2 px-2 lg:mx-2 relative right-4 bg-cyan-500'>
+          <button onClick={() => { console.log("hey") }} className='lg:mb-4 w-2/6 lg:w-1/6 h-8 lg:h-6 lg:h-12 border-2  border-black float-right rounded-lg lg:px-8 lg:py-2 px-2 lg:mx-2 relative right-4 bg-cyan-500'>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 float-left">
               <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
             </svg>
-            <input type="file" className='-top-4 text-sm lg:text-xl py-1.5 lg:py-0 font-medium' title=' '/>
-          </button> */}
+            {/* <input type="file" className='-top-4 text-sm lg:text-xl py-1.5 lg:py-0 font-medium' title=' '/> */}
+          </button>
 
           <div className='mt-10 px-4  border-2 border-black bg-gray-900 h-full w-full pb-20 overflow-x-hidden overflow-y-scroll no-scrollbar'>
             {
-              loading ?
+              shimmers ?
               Shimmers
               :
               files.map((i: any) => {
@@ -130,6 +134,8 @@ const Dashboard: React.FC = () => {
                   <FileOptions
                     show={files.indexOf(i)===0}
                     file={i.doc}
+                    lf={setLoading}
+                    setF= {setFilePOV}
                     Tok={Token}
                     >
                     <div className={`p-2 lg:px-4 lg: py-2 my-3 w-full h-28 ${theme !== 'dark' ?'bg-red-200':'bg-black'} rounded-lg flex`}>
@@ -159,6 +165,7 @@ const Dashboard: React.FC = () => {
               })
               
             }
+            <FileRC file={filePOV} Tok={Token}/>
                                 <Dialogue show={loading}/>
           </div>
           

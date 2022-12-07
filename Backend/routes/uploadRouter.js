@@ -27,7 +27,10 @@ let gfs, gridfsBucket;
 
 Router.post('/upload', [upload.single('file'), verifyToken], async(req,res)=>{
   const username =  req.user.username;
-  const acr = username.slice(0,3)
+  /**
+   * DEBT: use username acronym for filename
+   */
+  // const acr = username.slice(0,3)
   const userfound=  await ParchiUser.findOne({ username: username });
   const fileData={
     "doc":'',
@@ -39,14 +42,14 @@ Router.post('/upload', [upload.single('file'), verifyToken], async(req,res)=>{
     return item.doc;
   });  
     const fileNameEdited = req.file.originalname
-    const finalName = `${acr}-parchi-secure-${fileNameEdited}`
+    const finalName = `parchi-secure-${fileNameEdited}`
     gfs.files.findOne({ filename: fileNameEdited}, async(err,file)=>{
         if(!file || file.length===0){
     if(req.file === undefined || req.file === null) return res.send("NO FILES FOUND")
     
     const fileUrl = `${ReqProtocol + '://' + req.get('host')}/view/${finalName}`
     var isThere = valueArr.some(function (i) {
-      return i === fileUrl;
+      return i === finalName;
     });
     if(!isThere){
       fileData.doc = finalName
@@ -67,10 +70,8 @@ Router.post('/upload', [upload.single('file'), verifyToken], async(req,res)=>{
 Router.get('/delete/:filename',verifyToken,async(req,res)=>{
   const token = req.query.q
   const username = req.user.username;
-  console.log(">>> USERNAME: ",username)
   const userfound= await ParchiUser.findOne({ username: username})
   const newArr = userfound.Documents.filter(i=> i.doc!==req.params.filename)
-  console.log(">>> ", newArr)
   jwt.verify(token, process.env.JWT,  async(err, user) => {
     if (err) {
       res.status(404).json(err);
