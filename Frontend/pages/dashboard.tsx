@@ -48,7 +48,10 @@ const Dashboard: React.FC = () => {
     // document.addEventListener('contextmenu', (e) => {
     //   e.preventDefault();
     // });
-    setUsername(ls.get('parchiUserName'))
+    if(ls.get('parchiUserName')){
+      setUsername(ls.get('parchiUserName'))
+      console.log("HEY")
+    }
 		if(!loggedInStatus()){
 			Router.push("/")
 		}
