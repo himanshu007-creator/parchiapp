@@ -22,6 +22,7 @@ const Dashboard: React.FC = () => {
   const [docs, setDocs] = useState([])
   const [acDocs,setacDocs] = useState([])
   const [username,setUsername] = useState('')
+  const [role,setRole] = useState('')
   const [upload, setUpload] = useState(false)
   const [filePOV,setFilePOV] = useState('')
   const [fileRef,setFileRef] = useState('')
@@ -65,6 +66,7 @@ const Dashboard: React.FC = () => {
       const cookies = Cookies.get()
       if(ls.get('parchiUserName')){
         setUsername(ls.get('parchiUserName'))
+        setRole(ls.get('parchiUserRole'))
       }
       setToken(cookies.ParchiToken)
       getFiles()
@@ -175,6 +177,7 @@ const Dashboard: React.FC = () => {
                   // eslint-disable-next-line react/jsx-key
                   <FileOptions
                     resource={i}
+                    enabled={role==='Patient'}
                     show={files.indexOf(i)===0}
                     file={i.doc}
                     lf={setLoading}
@@ -192,7 +195,7 @@ const Dashboard: React.FC = () => {
                         <div className='font-medium w-full h-8'>
                           <p className={`float-left w-32 p-1  rounded-xl ${i.accessHolders.length===1? 'bg-red-700':'bg-blue-400'} p-1`}>
                           {
-                        i.accessHolders.length===1? 'Private':`Shared with: ${i.accessHolders.length}`}
+                        i.accessHolders.length===0? 'Private':`Shared with: ${i.accessHolders.length}`}
                           </p>
                           </div>
                       </div>
