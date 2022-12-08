@@ -10,11 +10,13 @@ import Router from 'next/router';
 import loggedInStatus from '@/utils/loggedin';
 import FileRC from '@/components/File';
 import { setInterval } from 'timers';
+import Upload from '@/components/Upload';
 
 
 
 const Dashboard: React.FC = () => {
   const theme = useTheme().systemTheme
+  const [upload, setUpload] = useState(false)
   const [filePOV,setFilePOV] = useState('')
   const [files,setFiles] = useState<any>([])
   const [Token,setToken] = useState('')
@@ -115,10 +117,11 @@ const Dashboard: React.FC = () => {
             <></>
         }
         <div className='w-full h-full  lg:p-8 bg-green-100 p-3'>
-          <button onClick={() => { console.log("hey") }} className='lg:mb-4 w-2/6 lg:w-1/6 h-8 lg:h-6 lg:h-12 border-2  border-black float-right rounded-lg lg:px-8 lg:py-2 px-2 lg:mx-2 relative right-4 bg-cyan-500'>
+          <button onClick={() => setUpload(true)} className='lg:mb-4 w-2/6 lg:w-1/6 h-8 lg:h-6 lg:h-12 border-2  border-black float-right rounded-lg lg:px-8 lg:py-2 px-2 lg:mx-2 relative right-4 bg-cyan-500'>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 float-left">
               <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
             </svg>
+            <p>Add new</p>
             {/* <input type="file" className='-top-4 text-sm lg:text-xl py-1.5 lg:py-0 font-medium' title=' '/> */}
           </button>
 
@@ -166,7 +169,8 @@ const Dashboard: React.FC = () => {
               
             }
             <FileRC file={filePOV} Tok={Token}/>
-                                <Dialogue show={loading}/>
+            <Dialogue show={loading}/>
+            <Upload Tok={Token} show={upload} ldng={setLoading}/>
           </div>
           
         </div>

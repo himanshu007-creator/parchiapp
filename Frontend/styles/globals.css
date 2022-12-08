@@ -24,7 +24,7 @@ body {
 }
 
 input[type='file'] {
-	color: rgba(0, 0, 0, 0)
+	font-weight: 400;
   }
 
   #toolbar {
