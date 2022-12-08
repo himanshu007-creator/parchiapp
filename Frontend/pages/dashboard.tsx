@@ -189,7 +189,12 @@ const Dashboard: React.FC = () => {
                       <Image src={i.doc.includes('.pdf')?"/img/pdf.png":"/img/pic.png"} alt='' className='h-24 w-48 border-2 fixed ' width={100} height={48} />
                       <div className='w-full h-full flex flex-wrap px-4'>
                         <p className='font-bold font-sans w-24 truncate '>{i.doc.split('.')[0].split('secure-')[1]}</p>
-                        <p className='font-medium w-full'>{i.accessHolders.length===1? 'Private':`Access holders: ${i.accessHolders.length-1}`}</p>
+                        <div className='font-medium w-full h-8'>
+                          <p className={`float-left w-32 p-1  rounded-xl ${i.accessHolders.length===1? 'bg-red-700':'bg-blue-400'} p-1`}>
+                          {
+                        i.accessHolders.length===1? 'Private':`Shared with: ${i.accessHolders.length}`}
+                          </p>
+                          </div>
                       </div>
                     </div>
                   </FileOptions>
@@ -204,7 +209,7 @@ const Dashboard: React.FC = () => {
           </div>          
         </div>
       </div>     
-        <SideNav show={sidenav} setShow={setSidenav} docs={docs} acDocs={acDocs} Tok={Token} Doc={fileRef}/>
+        <SideNav show={sidenav} setShow={setSidenav} docs={docs} acDocs={acDocs} Tok={Token} Doc={fileRef} ldng={setLoading}/>
     </div>
   </>
 }

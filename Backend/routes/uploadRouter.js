@@ -34,7 +34,7 @@ Router.post('/upload', [upload.single('file'), verifyToken], async(req,res)=>{
   const userfound=  await ParchiUser.findOne({ username: username });
   const fileData={
     "doc":'',
-    "accessHolders":[userfound._id]
+    "accessHolders":[]
   }
   const ReqProtocol = req.get('host').includes('localhost')? 'http':'https'
   var docs = await userfound.Documents;

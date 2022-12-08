@@ -1,5 +1,6 @@
 import Image from "next/image"
-import { ReactElement, JSXElementConstructor, ReactFragment, ReactPortal, useState } from "react"
+import Router from "next/router"
+import { ReactElement, JSXElementConstructor, ReactFragment, ReactPortal, useState, useEffect } from "react"
 interface props{
     setShow:any
     show:boolean
@@ -7,28 +8,38 @@ interface props{
     acDocs: any
     Tok:any
     Doc: string
+    ldng: any
 }
-const SideNav:React.FC<props> = ({show,setShow,docs,acDocs, Tok,Doc}:props)=>{
-    const [mode,setMode] = useState('')
+const SideNav:React.FC<props> = ({show,setShow,docs,acDocs, Tok,Doc,ldng}:props)=>{
+    const [ch,seTCh] = useState(false)
     const accessHolders = docs.filter((doc: { id: any })=>{return acDocs.includes(doc.id)})
     const restAllDocs = docs.filter((doc: { id: any })=>{return !acDocs.includes(doc.id)})
     const fetchUrl = 'https://parchiapp-backend.vercel.app/user/tgldocacc'
 
+    useEffect(()=>{
+
+    },[ch])
+
     const changeAccess = (id:string,mode:string)=>{
         const body = {
-            "doc":Doc,
-            "doctor":id,
-            "action":mode
+            doc:Doc,
+            doctor:id,
+            action:mode
         }
+        ldng(true)
         fetch(fetchUrl,{ 
             method: 'POST', 
             headers: new Headers({
+              'Content-Type': 'application/json',
                 'token': `Bearer ${Tok}`
             }),
             body: JSON.stringify(body)
         })
         .then(data=>data.json())
-        .then(data=>console.log(">>> MODIFIED: ",data))
+        .finally(()=>{
+          ldng(false)
+          Router.reload()
+        })
     }
 
     return (
