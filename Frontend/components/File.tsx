@@ -3,6 +3,7 @@ import Image from "next/image"
 import Router from "next/router"
 import { useEffect, useState } from "react"
 
+
 interface FileProps{
     file:string
     Tok:string
@@ -16,7 +17,7 @@ const FileRC:React.FC<FileProps> = ({file,Tok}:FileProps)=>{
         setlFile(file)
         return()=>{
             setVisible(true)
-        } 
+        }  
     },[])
 
     const closeFile = ()=>{
@@ -42,7 +43,7 @@ const FileRC:React.FC<FileProps> = ({file,Tok}:FileProps)=>{
                             file.includes('.pdf')
                             ?
                             <>
-                            <iframe width="100%" height="700px" src={fetchURL+'&embedded=true#toolbar=0&navpanes=0&scrollbar=0'} onMouseDown={()=>false} id="pdf_content" onContextMenu={()=>false} >
+                            <iframe width="100%" height="700px" src={fetchURL+'#toolbar=0&navpanes=0&scrollbar=0'} onMouseDown={()=>false} id="pdf_content" loading="lazy" onContextMenu={()=>false} >
                                     <p>IPDF's aint loyal to mobile devices yet bruv</p>
                                 </iframe>
                             
