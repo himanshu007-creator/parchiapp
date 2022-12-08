@@ -11,11 +11,14 @@ import loggedInStatus from '@/utils/loggedin';
 import FileRC from '@/components/File';
 import { setInterval } from 'timers';
 import Upload from '@/components/Upload';
+import SIdeNav from '@/components/SideNav';
+import SideNav from '@/components/SideNav';
 
 
 
 const Dashboard: React.FC = () => {
   const theme = useTheme().systemTheme
+  const [sidenav,setSidenav] = useState(false)
   const [username,setUsername] = useState('')
   const [upload, setUpload] = useState(false)
   const [filePOV,setFilePOV] = useState('')
@@ -93,7 +96,7 @@ const Dashboard: React.FC = () => {
 
   return <>
     <div className={`${loading? 'pointer-events-none':''} flex flex-wrap h-screen bg-gray-100  ${theme === 'dark' ? 'bg-zinc-900' : 'bg-gray-100 overflow-hidden'}`}>
-      <div className={`bg-red-500 w-full h-16 px-4 rounded-b-lg ${theme === 'dark' ? 'shadow-red-500/50 shadow-lg' : ''}`}>
+      <div onClick={()=>setSidenav(false)} className={`bg-red-500 w-full h-16 px-4 rounded-b-lg ${theme === 'dark' ? 'shadow-red-500/50 shadow-lg' : ''}`}>
         <div className={`float-left lg:ml-6 mt-2 w-4/6 h-4/6 bg-gradient-to-r ${theme === 'dark'?'from-gray-700':'from-violet-700'} to-green-300 animate-pulsate rounded-lg`}>
           <p className="font-bold py-2 px-8 mb-2 text-2xl font-abril-fatface">
             ParchiApp
@@ -133,7 +136,14 @@ const Dashboard: React.FC = () => {
               shimmers ?
               Shimmers
               :
-              !!files.length ?
+              files.length ===0 ?
+              <div className={`backdrop-blur h-5/6 relative top-16 flex justify-center items-center bg-gray-800 text-white`}>
+                <div className='flex flex-col'>
+                <Image src="/img/not_found.gif" height={250} width={200}/>
+                <p className={`relative top-4 font-bold text-xl font-mono p-4`}>Nothing here, add some ;)</p>
+                </div>
+              </div>
+              :
               files.map((i: any) => {
                 i.doc = i.doc.replace('https','http')
                 return (
@@ -144,6 +154,7 @@ const Dashboard: React.FC = () => {
                     lf={setLoading}
                     setF= {setFilePOV}
                     Tok={Token}
+                    sideNv={setSidenav}
                     >
                       
                     <div className={`lg:px-4 lg: py-2 w-full h-28 ${theme !== 'dark' ?'bg-red-200':'bg-black'} rounded-lg flex`}>
@@ -157,20 +168,16 @@ const Dashboard: React.FC = () => {
                 )
                 
               })
-              :
-              shimmers && !!!files.length?
-              <p className='bg-red-300'>NO FILES TO SEE HERE</p>
-              :<></>
               
             }
             <FileRC file={filePOV} Tok={Token}/>
             <Dialogue show={loading} />
             <Upload Tok={Token} show={upload} ldng={setLoading}/>
-          </div>
-          
+          </div>          
         </div>
       </div>
-
+     
+        <SideNav show={sidenav} setShow={setSidenav} />
     </div>
   </>
 }

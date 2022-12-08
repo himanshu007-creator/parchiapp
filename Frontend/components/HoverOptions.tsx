@@ -12,10 +12,11 @@ interface Shortcutoptions {
     Tok:string
     lf:any
     setF:any
+    sideNv: any
 }
 
 
-const FileOptions = ({ children, show,file ,Tok,lf,setF}:Shortcutoptions) => {
+const FileOptions = ({ children, show,file ,Tok,lf,setF,sideNv}:Shortcutoptions) => {
     const [Token,setToken] = useState('')
 
     useEffect(()=>{
@@ -48,10 +49,14 @@ const FileOptions = ({ children, show,file ,Tok,lf,setF}:Shortcutoptions) => {
     const setFile = ()=>{
         setF(file);
     }
+
+    const setSideNavVisible= ()=>{
+        sideNv(true)
+    }
     return (
         <div className="group">
             <div className={`${showEnabled ? 'visible' : 'invisible'} group-hover:visible w-30 h-12 relative top-10 float-right -left-2 text-black z-10 pt-4 flex gap-4 top-2`}>
-                    <button onClick={function(e) {console.log("YO")}}>
+                    <button onClick={setSideNavVisible}>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className=" w-6 h-6 cursor-pointer fill-green-600 text-medium">
                             <path fillRule="evenodd" d="M15.75 1.5a6.75 6.75 0 00-6.651 7.906c.067.39-.032.717-.221.906l-6.5 6.499a3 3 0 00-.878 2.121v2.818c0 .414.336.75.75.75H6a.75.75 0 00.75-.75v-1.5h1.5A.75.75 0 009 19.5V18h1.5a.75.75 0 00.53-.22l2.658-2.658c.19-.189.517-.288.906-.22A6.75 6.75 0 1015.75 1.5zm0 3a.75.75 0 000 1.5A2.25 2.25 0 0118 8.25a.75.75 0 001.5 0 3.75 3.75 0 00-3.75-3.75z" clipRule="evenodd" />
                         </svg>
