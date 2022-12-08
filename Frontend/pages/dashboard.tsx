@@ -53,9 +53,6 @@ const Dashboard: React.FC = () => {
   }
 
   useEffect(()=>{
-    console.log(">>> FREF: ",fileRef, filePOV)
-  },[fileRef,filePOV])
-  useEffect(()=>{
     document.addEventListener('contextmenu', (e) => {
       e.preventDefault();
     });
@@ -211,9 +208,9 @@ const Dashboard: React.FC = () => {
           </div>          
         </div>
       </div>     
-        <SideNav show={sidenav} setShow={setSidenav} docs={docs} acDocs={acDocs} Tok={Token} Doc={fileRef} ldng={setLoading}/>
+        <SideNav show={sidenav} setShow={setSidenav} docs={docs} acDocs={acDocs} Tok={Token} Doc={filePOV} ldng={setLoading} stpv={setFilePOV}  user={username}/>
     </div>
   </>
-}
+} 
 
 export default Dashboard

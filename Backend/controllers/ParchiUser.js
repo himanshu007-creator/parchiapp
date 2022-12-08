@@ -136,7 +136,6 @@ async function addDocAccessToFile(req, res) {
   const DoctorFound= await ParchiUser.findOne({ _id: req.body.doctor});
 
   const docs = userfound.Documents;
-  console.log(">>>R: ",req.body, docs)
   let found = false;
   var ans
   docs.forEach(element => {
@@ -151,7 +150,6 @@ async function addDocAccessToFile(req, res) {
   var newArr;
   var DocArray;
   if(req.body.action === 'add'){
-    console.log(">>> ADDING: ")
     let isAccessAlreadyThere = DoctorFound.PatientDocs.find(o => o.file === req.body.doc);
     if(isAccessAlreadyThere){
       return res.status(200).json({"status":"alreadyHasAccess"});
@@ -165,7 +163,6 @@ async function addDocAccessToFile(req, res) {
       }
   }
   else if(req.body.action === 'delete'){
-    console.log(">>> DELETING: ")
       newArr = ans.accessHolders.filter(i=> i!=req.body.doctor)
       DocArray = DoctorFound.PatientDocs.filter(i=> i.file!=req.body.doc)
   }

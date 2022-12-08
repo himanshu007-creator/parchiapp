@@ -57,6 +57,7 @@ const FileOptions = ({ children, show,file ,Tok,lf,setF,sideNv,setAcDocs,resourc
     const setSideNavVisible= ()=>{
         setAcDocs(resource.accessHolders)
         sideNv(true)
+        setF(file);
     }
     return (
         <div className="group">

@@ -72,6 +72,22 @@ Router.get('/delete/:filename',verifyToken,async(req,res)=>{
   const username = req.user.username;
   const userfound= await ParchiUser.findOne({ username: username})
   const newArr = userfound.Documents.filter(i=> i.doc!==req.params.filename)
+  const ftd = userfound.Documents.filter(i=> i.doc===req.params.filename)
+  
+  if(ftd[0].accessHolders.length!==0){
+    const docId = ftd[0].accessHolders[0]
+    const doctorFound = await ParchiUser.findOne({ _id: docId })
+    const newDocArray = doctorFound.PatientDocs.filter((i)=>i.file !== req.params.filename)
+    var result = await ParchiUser.updateOne(
+      { username: username },
+      { $set: {"Documents": newArr}}
+    );
+    var resultDoc = await ParchiUser.updateOne(
+      { _id: docId },
+      {$set: {PatientDocs: newDocArray}}
+    );
+    console.log(result,resultDoc)
+  }
   jwt.verify(token, process.env.JWT,  async(err, user) => {
     if (err) {
       res.status(404).json(err);
@@ -79,11 +95,8 @@ Router.get('/delete/:filename',verifyToken,async(req,res)=>{
      else {
       try{
       const file = await gfs.files.deleteOne({filename: req.params.filename});
-      var result = await ParchiUser.updateOne(
-        { username: username },
-        { $set: {"Documents": newArr}}
-      );
-      return res.json({result,file})
+      
+      return res.json({file})
       }
       catch(err){
           return res.send(err)

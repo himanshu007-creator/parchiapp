@@ -9,16 +9,24 @@ interface props{
     Tok:any
     Doc: string
     ldng: any
+    stpv:any
+    user:string
 }
-const SideNav:React.FC<props> = ({show,setShow,docs,acDocs, Tok,Doc,ldng}:props)=>{
-    const [ch,seTCh] = useState(false)
-    const accessHolders = docs.filter((doc: { id: any })=>{return acDocs.includes(doc.id)})
-    const restAllDocs = docs.filter((doc: { id: any })=>{return !acDocs.includes(doc.id)})
-    const fetchUrl = 'https://parchiapp-backend.vercel.app/user/tgldocacc'
+const SideNav:React.FC<props> = ({show,setShow,docs,acDocs, Tok,Doc,ldng,user,stpv}:props)=>{
+  const accessHolders = docs.filter((doc: {
+    username: string 
+    id: any 
+})=>{return acDocs.includes(doc.id) && doc.username !== user})
+  const restAllDocs = docs.filter((doc: {
+    username: string ,id: any 
+})=>{return !acDocs.includes(doc.id) && doc.username !== user})
+  const fetchUrl = 'https://parchiapp-backend.vercel.app/user/tgldocacc'
 
-    useEffect(()=>{
 
-    },[ch])
+    const hideShit = ()=>{
+      setShow(false)
+      stpv('')
+    }
 
     const changeAccess = (id:string,mode:string)=>{
         const body = {
@@ -47,7 +55,7 @@ const SideNav:React.FC<props> = ({show,setShow,docs,acDocs, Tok,Doc,ldng}:props)
         {
             show && docs.length!==0 ? 
             <>
-             <div onClick={()=>setShow(false)} className=" duration-300 transition ease-in-out delay-150 w-full h-full bg-transparent backdrop-blur z-30 left-0 absolute"> </div>
+             <div onClick={()=>{hideShit}} className=" duration-300 transition ease-in-out delay-150 w-full h-full bg-transparent  z-30 left-0 absolute"> </div>
         <div className="duration-300 transition ease-in-out delay-150 w-60 h-full shadow-md bg-white absolute right-0 z-30" id="sidenavSecExample">
   <div className="pt-4 pb-2 px-6">
     <a href="#!">
