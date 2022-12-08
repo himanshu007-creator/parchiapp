@@ -177,7 +177,6 @@ const Dashboard: React.FC = () => {
                   // eslint-disable-next-line react/jsx-key
                   <FileOptions
                     resource={i}
-                    enabled={role==='Patient'}
                     show={files.indexOf(i)===0}
                     file={i.doc}
                     lf={setLoading}
