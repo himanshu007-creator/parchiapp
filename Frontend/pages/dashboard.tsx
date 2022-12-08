@@ -16,6 +16,7 @@ import Upload from '@/components/Upload';
 
 const Dashboard: React.FC = () => {
   const theme = useTheme().systemTheme
+  const [username,setUsername] = useState('test')
   const [upload, setUpload] = useState(false)
   const [filePOV,setFilePOV] = useState('')
   const [files,setFiles] = useState<any>([])
@@ -47,6 +48,7 @@ const Dashboard: React.FC = () => {
     // document.addEventListener('contextmenu', (e) => {
     //   e.preventDefault();
     // });
+    setUsername(ls.get('parchiUserName'))
 		if(!loggedInStatus()){
 			Router.push("/")
 		}
@@ -97,7 +99,7 @@ const Dashboard: React.FC = () => {
         </div>
         <div onMouseEnter={() => { console.log("HOVER") }} onClickCapture={() => { setLogoutVisible(!logout) }} onMouseLeave={() => { setTimeout(() => { setLogoutVisible(false) }, 2500) }} className={`group br-1 p-2 text-2xl bg-gray-300 rounded-lg  hover:bg-gray-500 w-16 h-full float-right`}>
           <div className='p-2 px-4 bg-red-600 h-full w-full rounded-full'>
-            <p className='visible group-hover:invisible '>H</p>
+            <p className='visible group-hover:invisible '>{username.charAt(0)}</p>
             <p className='invisible group-hover:visible relative -left-1.5 -top-8 '>⚙️</p>
           </div>
         </div>
