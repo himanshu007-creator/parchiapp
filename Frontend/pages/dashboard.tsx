@@ -19,6 +19,7 @@ import SideNav from '@/components/SideNav';
 const Dashboard: React.FC = () => {
   const theme = useTheme().systemTheme
   const [sidenav,setSidenav] = useState(false)
+  const [fetchUrl,setFetchUrl] = useState('')
   const [docs, setDocs] = useState([])
   const [acDocs,setacDocs] = useState([])
   const [username,setUsername] = useState('')
@@ -34,22 +35,24 @@ const Dashboard: React.FC = () => {
   const Shimmers = new Array(6).fill(<Shimmer/>)
 
   const handleFetchData = () => {
+    if(fetchUrl){
     setShimmers(true)
-    fetch('https://parchiapp-backend.vercel.app/user/files',{ 
+    fetch(fetchUrl,{ 
         method: 'get', 
         headers: new Headers({
             'token': `Bearer ${Token}`
         }),
     })
-    .then(data=>  data.json()
-    )
+    .then(data=>  data.json())
     .then((data) => {
       setFiles(data)
+      console.log(">>> DT: ",data)
     })
     .finally(()=>{
       setLoading(false)
       setShimmers(false)
     })
+  }
   }
 
   useEffect(()=>{
@@ -64,6 +67,12 @@ const Dashboard: React.FC = () => {
       if(ls.get('parchiUserName')){
         setUsername(ls.get('parchiUserName'))
         setRole(ls.get('parchiUserRole'))
+        if(ls.get('parchiUserRole')==='Doctor'){
+          setFetchUrl('https://parchiapp-backend.vercel.app/user/pfiles')
+        }
+        else{
+          setFetchUrl('https://parchiapp-backend.vercel.app/user/files')
+        }
       }
       setToken(cookies.ParchiToken)
       getFiles()
@@ -72,7 +81,7 @@ const Dashboard: React.FC = () => {
 	},[Token])
 
   useEffect(()=>{
-    if(Token!==''){
+    if(Token!=='' && role!=='Doctor'){
       fetch('https://parchiapp-backend.vercel.app/user/doctors',{ 
         method: 'get', 
         headers: new Headers({
@@ -148,12 +157,23 @@ const Dashboard: React.FC = () => {
             <></>
         }
         <div className={`w-full h-full  lg:p-8 ${theme !== 'dark' ?'bg-gray-200':'bg-transparent backdrop-blur'} p-3`}>
+
+        {
+          role==='Doctor'?
+          <>
+              <p className="rounded-lg w-full h-16 bg-white flex text-center justify-center pt-4 text-red-600 text-3xl">For Doctors Only <span className='animate-ping bg-red-800 border-2 h-2 w-2 p-1 rounded-full'></span></p>
+          </>
+          :
+          <>
           <button onClick={() => setUpload(true)} className={`lg:mb-4 w-2/6 lg:w-1/6 h-8 lg:h-6 lg:h-12 border-2  border-black float-right rounded-lg lg:px-8 lg:py-2 px-2 lg:mx-2 relative font-bold right-4  text-black ${theme !== 'dark' ?'bg-cyan-600 hover:bg-cyan-300':'bg-cyan-400  hover:bg-cyan-300'}`}>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 float-left">
               <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
             </svg>
             <p>Add new</p>
           </button>
+          </>
+        }
+        
 
           <div className='mt-10 px-4  border-2 border-black bg-gray-900 h-full w-full pb-20 overflow-x-hidden overflow-y-scroll no-scrollbar'>
             {
@@ -169,13 +189,13 @@ const Dashboard: React.FC = () => {
               </div>
               :
               files.map((i: any) => {
-                i.doc = i.doc.replace('https','http')
                 return (
                   // eslint-disable-next-line react/jsx-key
                   <FileOptions
                     resource={i}
                     show={files.indexOf(i)===0}
-                    file={i.doc}
+                    viewOnly={role==='Doctor'}
+                    file={role==='Doctor'?i.file : i.doc}
                     lf={setLoading}
                     setF= {setFilePOV}
                     Tok={Token}
@@ -183,19 +203,41 @@ const Dashboard: React.FC = () => {
                     setAcDocs={setacDocs}
                     setRefFile={setFileRef}
                     >
-                      
-                    <div className={`lg:px-4 lg: py-2 w-full h-28 ${theme !== 'dark' ?'bg-red-200':'bg-black'} rounded-lg flex`}>
-                      <Image src={i.doc.includes('.pdf')?"/img/pdf.png":"/img/pic.png"} alt='' className='h-24 w-48 border-2 fixed ' width={100} height={48} />
-                      <div className='w-full h-full flex flex-wrap px-4'>
-                        <p className='font-bold font-sans w-24 truncate '>{i.doc.split('.')[0].split('secure-')[1]}</p>
-                        <div className='font-medium w-full h-8'>
-                          <p className={`float-left w-32 p-1  rounded-xl ${i.accessHolders.length===1? 'bg-red-700':'bg-blue-400'} p-1`}>
-                          {
-                        i.accessHolders.length===0? 'Private':`Shared with: ${i.accessHolders.length}`}
-                          </p>
+                <div className={`lg:px-4 lg: py-2 w-full h-28 ${theme !== 'dark' ? 'bg-red-200' : 'bg-black'} rounded-lg flex`}>
+
+                  {
+                    role==='Doctor'?
+                    <>
+                        <Image src={i.file.includes('.pdf') ? "/img/pdf.png" : "/img/pic.png"} alt='' className='h-24 w-48 border-2 fixed ' width={100} height={48} />
+                        <div className='w-full h-full flex flex-wrap px-4'>
+                            <p className='font-bold font-sans w-24 truncate '>{i.file.split('.')[0].split('secure-')[1]}</p>
+                            <div className='font-medium w-full h-8'>
+                            <p className={`float-left w-32 p-1  rounded-xl bg-red-400 p-1`}>
+                              Shared By <b>{i.patient}</b>
+                              </p>
+                            </div>
                           </div>
-                      </div>
-                    </div>
+
+                    </>
+                    :
+                    <>
+                     <Image src={i.doc.includes('.pdf') ? "/img/pdf.png" : "/img/pic.png"} alt='' className='h-24 w-48 border-2 fixed ' width={100} height={48} />
+                          <div className='w-full h-full flex flex-wrap px-4'>
+                            <p className='font-bold font-sans w-24 truncate '>{i.doc.split('.')[0].split('secure-')[1]}</p>
+                            <div className='font-medium w-full h-8'>
+                              <p className={`float-left w-32 p-1  rounded-xl ${i.accessHolders.length === 1 ? 'bg-red-700' : 'bg-blue-400'} p-1`}>
+                                {
+                                  i.accessHolders.length === 0 ? 'Private' : `Shared with: ${i.accessHolders.length}`
+                                }
+                              </p>
+                            </div>
+                          </div>
+                    
+                    </>
+                         
+                  }
+                  </div>
+                    
                   </FileOptions>
                 )
                 
