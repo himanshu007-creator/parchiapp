@@ -73,6 +73,7 @@ const Upload:React.FC<FileProps> = ({Tok,show,ldng}:FileProps)=>{
                         // @ts-expect-error
                         onChange={(e)=>{setFile(e.target.files[0]); console.log(e.target.files[0])}}
                         required
+                        data-max-size="2048"
                         name="photo"
                         type="file"
                         accept="image/png, image/gif, image/jpeg, application/pdf"

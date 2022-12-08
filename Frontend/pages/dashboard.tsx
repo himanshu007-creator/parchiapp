@@ -16,7 +16,7 @@ import Upload from '@/components/Upload';
 
 const Dashboard: React.FC = () => {
   const theme = useTheme().systemTheme
-  const [username,setUsername] = useState('test')
+  const [username,setUsername] = useState('')
   const [upload, setUpload] = useState(false)
   const [filePOV,setFilePOV] = useState('')
   const [files,setFiles] = useState<any>([])
@@ -45,18 +45,17 @@ const Dashboard: React.FC = () => {
     })
   }
   useEffect(()=>{
-    // document.addEventListener('contextmenu', (e) => {
-    //   e.preventDefault();
-    // });
-    if(ls.get('parchiUserName')){
-      setUsername(ls.get('parchiUserName'))
-      console.log("HEY")
-    }
+    document.addEventListener('contextmenu', (e) => {
+      e.preventDefault();
+    });
 		if(!loggedInStatus()){
 			Router.push("/")
 		}
     else{
       const cookies = Cookies.get()
+      if(ls.get('parchiUserName')){
+        setUsername(ls.get('parchiUserName'))
+      }
       setToken(cookies.ParchiToken)
       getFiles()
     }
@@ -102,7 +101,7 @@ const Dashboard: React.FC = () => {
         </div>
         <div onMouseEnter={() => { console.log("HOVER") }} onClickCapture={() => { setLogoutVisible(!logout) }} onMouseLeave={() => { setTimeout(() => { setLogoutVisible(false) }, 2500) }} className={`group br-1 p-2 text-2xl bg-gray-300 rounded-lg  hover:bg-gray-500 w-16 h-full float-right`}>
           <div className='p-2 px-4 bg-red-600 h-full w-full rounded-full'>
-            <p className='visible group-hover:invisible '>{username.charAt(0)}</p>
+            <p className='visible group-hover:invisible '>{username.toUpperCase().charAt(0)}</p>
             <p className='invisible group-hover:visible relative -left-1.5 -top-8 '>⚙️</p>
           </div>
         </div>
@@ -121,13 +120,12 @@ const Dashboard: React.FC = () => {
             :
             <></>
         }
-        <div className='w-full h-full  lg:p-8 bg-green-100 p-3'>
-          <button onClick={() => setUpload(true)} className='lg:mb-4 w-2/6 lg:w-1/6 h-8 lg:h-6 lg:h-12 border-2  border-black float-right rounded-lg lg:px-8 lg:py-2 px-2 lg:mx-2 relative right-4 bg-cyan-500'>
+        <div className={`w-full h-full  lg:p-8 ${theme !== 'dark' ?'bg-gray-200':'bg-transparent backdrop-blur'} p-3`}>
+          <button onClick={() => setUpload(true)} className={`lg:mb-4 w-2/6 lg:w-1/6 h-8 lg:h-6 lg:h-12 border-2  border-black float-right rounded-lg lg:px-8 lg:py-2 px-2 lg:mx-2 relative font-bold right-4  text-black ${theme !== 'dark' ?'bg-cyan-600 hover:bg-cyan-300':'bg-cyan-400  hover:bg-cyan-300'}`}>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 float-left">
               <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
             </svg>
             <p>Add new</p>
-            {/* <input type="file" className='-top-4 text-sm lg:text-xl py-1.5 lg:py-0 font-medium' title=' '/> */}
           </button>
 
           <div className='mt-10 px-4  border-2 border-black bg-gray-900 h-full w-full pb-20 overflow-x-hidden overflow-y-scroll no-scrollbar'>
@@ -135,6 +133,7 @@ const Dashboard: React.FC = () => {
               shimmers ?
               Shimmers
               :
+              !!files.length ?
               files.map((i: any) => {
                 i.doc = i.doc.replace('https','http')
                 return (
@@ -146,35 +145,26 @@ const Dashboard: React.FC = () => {
                     setF= {setFilePOV}
                     Tok={Token}
                     >
-                    <div className={`p-2 lg:px-4 lg: py-2 my-3 w-full h-28 ${theme !== 'dark' ?'bg-red-200':'bg-black'} rounded-lg flex`}>
-                      <Image src="/img/musk.jpeg" alt='' className='h-24 w-48 border-2 fixed ' width={100} height={48} />
+                      
+                    <div className={`lg:px-4 lg: py-2 w-full h-28 ${theme !== 'dark' ?'bg-red-200':'bg-black'} rounded-lg flex`}>
+                      <Image src={i.doc.includes('.pdf')?"/img/pdf.png":"/img/pic.png"} alt='' className='h-24 w-48 border-2 fixed ' width={100} height={48} />
                       <div className='w-full h-full flex flex-wrap px-4'>
                         <p className='font-bold font-sans w-3/6 truncate'>{i.doc.split('.')[0].split('secure-')[1]}</p>
                         <p className='font-medium w-full'>Access Holders: Elon Musk</p>
                       </div>
                     </div>
-
-                    {/* {
-                      i.doc.includes('pdf')?
-                      <>
-                      <object data={`${i.doc}?q=${Token}`} type="application/pdf" width="100%" height="700px">
-      <p>Alternative text - include a link <a href="http://africau.edu/images/default/sample.pdf">to the PDF!</a></p>
-  </object>
-                       
-                      </>
-                     
-                      :
-                      <img src={`${i.doc}?q=${Token}`} alt='' width={100} height={100}/>
-
-              } */}
                   </FileOptions>
                 )
                 
               })
+              :
+              shimmers && !!!files.length?
+              <p className='bg-red-300'>NO FILES TO SEE HERE</p>
+              :<></>
               
             }
             <FileRC file={filePOV} Tok={Token}/>
-            <Dialogue show={loading}/>
+            <Dialogue show={loading} />
             <Upload Tok={Token} show={upload} ldng={setLoading}/>
           </div>
           

@@ -1,6 +1,9 @@
+import { useTheme } from "next-themes"
+
 const Shimmer:React.FC = ()=>{
+  const theme = useTheme().systemTheme
     return (
-        <div className='p-2 lg:px-4 lg: py-2 my-3 w-full mb-8 h-28 bg-red-200 rounded-lg flex'>
+        <div className={`mt-4 p-2 lg:px-4 lg: py-2 my-3 w-full mb-8 h-28 ${theme !== 'dark' ?'bg-red-200':'bg-black'} rounded-lg flex`}>
         <p className='h-24 w-[90px] lg:w-[95px] border-2 animate-pulse bg-blue-200 rounded-lg'></p>
         <div className='w-[230px] lg:w-full h-full flex flex-wrap px-2 py-1'>
           <div className='w-full h-10'>

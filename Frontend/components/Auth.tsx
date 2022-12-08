@@ -70,6 +70,7 @@ export const Auth: React.FC<AuthProps> = (props:AuthProps)=>{
                     setRole('')
                     setMsgClr('green')
                     messageHandler('Registration Successful')
+                    setMode('Login')
                 }
             })
             .catch(()=>{
