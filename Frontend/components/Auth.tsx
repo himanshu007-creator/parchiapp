@@ -46,9 +46,11 @@ export const Auth: React.FC<AuthProps> = (props:AuthProps)=>{
             })
             .then(data=>data.json())
             .then((data)=>{
+                console.log(">>>LGIN: ",data)
                 if(mode === 'login'){
                     ls.set('parchiUserLoggedIn',true);
                     ls.set('parchiUserName',username)
+                    ls.set('parchiUserRole',data.role)
                     Cookies.set('ParchiToken', data.accesstoken)
                     setUsername('')
                     setPassword('')

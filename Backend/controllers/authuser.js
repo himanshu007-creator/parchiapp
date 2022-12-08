@@ -17,6 +17,7 @@ var refreshTokens= [];
     }
     const Token = {
       username: user.username,
+      role: user.role
     };
     const AccessToken = jwt.sign(Token, process.env.JWT);
 
@@ -35,11 +36,12 @@ var refreshTokens= [];
     Origpassword !== req.body.password && res.status(401).json({status:"failure",details: "wrong credentials"});
     const Token = {
       username: user.username,
+      role: user.role
     };
     const AccessToken = jwt.sign(Token, process.env.JWT);
     const refreshtoken = jwt.sign(Token, process.env.JWT);
     // const { password, ...others } = user._doc;
-    res.status(200).json({ accesstoken: AccessToken, refreshtoken: refreshtoken });
+    res.status(200).json({ accesstoken: AccessToken, refreshtoken: refreshtoken , role: user.role });
     }
     
   } catch (err) {

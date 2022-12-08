@@ -13,16 +13,20 @@ interface Shortcutoptions {
     lf:any
     setF:any
     sideNv: any
+    setAcDocs: any
+    resource:any
+    setRefFile: any
 }
 
 
-const FileOptions = ({ children, show,file ,Tok,lf,setF,sideNv}:Shortcutoptions) => {
+const FileOptions = ({ children, show,file ,Tok,lf,setF,sideNv,setAcDocs,resource,setRefFile}:Shortcutoptions) => {
     const [Token,setToken] = useState('')
 
     useEffect(()=>{
-        // document.addEventListener('contextmenu', (e) => {
-        //   e.preventDefault();
-        // });
+        setRefFile(file)
+        document.addEventListener('contextmenu', (e) => {
+          e.preventDefault();
+        });
             if(!loggedInStatus()){
                 Router.push("/")
             }
@@ -51,6 +55,7 @@ const FileOptions = ({ children, show,file ,Tok,lf,setF,sideNv}:Shortcutoptions)
     }
 
     const setSideNavVisible= ()=>{
+        setAcDocs(resource.accessHolders)
         sideNv(true)
     }
     return (

@@ -41,7 +41,7 @@ Router.post('/upload', [upload.single('file'), verifyToken], async(req,res)=>{
   var valueArr = docs.map(function (item) {
     return item.doc;
   });  
-    const fileNameEdited = req.file.originalname
+    const fileNameEdited = req.file.originalname.trim().replace(/\s/g, '-')
     const finalName = `parchi-secure-${fileNameEdited}`
     gfs.files.findOne({ filename: fileNameEdited}, async(err,file)=>{
         if(!file || file.length===0){

@@ -19,9 +19,12 @@ import SideNav from '@/components/SideNav';
 const Dashboard: React.FC = () => {
   const theme = useTheme().systemTheme
   const [sidenav,setSidenav] = useState(false)
+  const [docs, setDocs] = useState([])
+  const [acDocs,setacDocs] = useState([])
   const [username,setUsername] = useState('')
   const [upload, setUpload] = useState(false)
   const [filePOV,setFilePOV] = useState('')
+  const [fileRef,setFileRef] = useState('')
   const [files,setFiles] = useState<any>([])
   const [Token,setToken] = useState('')
   const [logout, setLogoutVisible] = useState(false)
@@ -47,6 +50,10 @@ const Dashboard: React.FC = () => {
       setShimmers(false)
     })
   }
+
+  useEffect(()=>{
+    console.log(">>> FREF: ",fileRef, filePOV)
+  },[fileRef,filePOV])
   useEffect(()=>{
     document.addEventListener('contextmenu', (e) => {
       e.preventDefault();
@@ -62,7 +69,25 @@ const Dashboard: React.FC = () => {
       setToken(cookies.ParchiToken)
       getFiles()
     }
+    
 	},[Token])
+
+  useEffect(()=>{
+    if(Token!==''){
+      fetch('https://parchiapp-backend.vercel.app/user/doctors',{ 
+        method: 'get', 
+        headers: new Headers({
+            'token': `Bearer ${Token}`
+        }),
+    })
+    .then(data=>  data.json()
+    )
+    .then((data) => {
+      setDocs(data)
+    })
+    }
+ 
+  },[Token])
 
 
 
@@ -139,7 +164,7 @@ const Dashboard: React.FC = () => {
               files.length ===0 ?
               <div className={`backdrop-blur h-5/6 relative top-16 flex justify-center items-center bg-gray-800 text-white`}>
                 <div className='flex flex-col'>
-                <Image src="/img/not_found.gif" height={250} width={200}/>
+                <Image src="/img/not_found.gif" height={250} width={200} priority/>
                 <p className={`relative top-4 font-bold text-xl font-mono p-4`}>Nothing here, add some ;)</p>
                 </div>
               </div>
@@ -149,19 +174,22 @@ const Dashboard: React.FC = () => {
                 return (
                   // eslint-disable-next-line react/jsx-key
                   <FileOptions
+                    resource={i}
                     show={files.indexOf(i)===0}
                     file={i.doc}
                     lf={setLoading}
                     setF= {setFilePOV}
                     Tok={Token}
                     sideNv={setSidenav}
+                    setAcDocs={setacDocs}
+                    setRefFile={setFileRef}
                     >
                       
                     <div className={`lg:px-4 lg: py-2 w-full h-28 ${theme !== 'dark' ?'bg-red-200':'bg-black'} rounded-lg flex`}>
                       <Image src={i.doc.includes('.pdf')?"/img/pdf.png":"/img/pic.png"} alt='' className='h-24 w-48 border-2 fixed ' width={100} height={48} />
                       <div className='w-full h-full flex flex-wrap px-4'>
-                        <p className='font-bold font-sans w-3/6 truncate'>{i.doc.split('.')[0].split('secure-')[1]}</p>
-                        <p className='font-medium w-full'>Access Holders: Elon Musk</p>
+                        <p className='font-bold font-sans w-24 truncate '>{i.doc.split('.')[0].split('secure-')[1]}</p>
+                        <p className='font-medium w-full'>{i.accessHolders.length===1? 'Private':`Access holders: ${i.accessHolders.length-1}`}</p>
                       </div>
                     </div>
                   </FileOptions>
@@ -175,9 +203,8 @@ const Dashboard: React.FC = () => {
             <Upload Tok={Token} show={upload} ldng={setLoading}/>
           </div>          
         </div>
-      </div>
-     
-        <SideNav show={sidenav} setShow={setSidenav} />
+      </div>     
+        <SideNav show={sidenav} setShow={setSidenav} docs={docs} acDocs={acDocs} Tok={Token} Doc={fileRef}/>
     </div>
   </>
 }
