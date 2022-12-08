@@ -144,7 +144,7 @@ export const Auth: React.FC<AuthProps> = (props:AuthProps)=>{
         <form action="">
             <div className="mt-4">
                 <div>
-                    <label className="block" >username</label>
+                    <label className="block" >Username</label>
                             <input value={username} onChange={(e)=>{setUsername(e.target.value.trim())}} type="text" placeholder="username"
                                 className="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-red-400"/>
                 </div>
@@ -172,7 +172,6 @@ export const Auth: React.FC<AuthProps> = (props:AuthProps)=>{
                 <div className="flex items-baseline justify-between">
                     <p onClick={()=>submit(submitMode)} className="px-6 py-2 mt-4 text-white bg-red-400 rounded-lg hover:bg-red-600">{selectedmode.buttontext}</p>
                     <p onClick={()=>{setMode(selectedmode.additionaloptionLink); console.log(">>> HEY:", mode)}}className="text-xs text-red-400 hover:underline">{selectedmode.additionalOption}</p>
-                    <a href="/dashboard">Dashboard</a>
                 </div>
             </div>
         </form>
