@@ -91,5 +91,5 @@ app.get('/remove/:filename', async(req,res)=>{
    )
 })
 app.get('/', (req, res) => {
-    res.send('hello world')
+    res.send('ParchiApp backend: Made with ❤️ by <a href="https://github.com/himanshu007-creator">Himanshu</a> & <a href="https://github.com/piyushdhir1">Piyush</a>, Find project on GitHub <a href="https://github.com/himanshu007-creator/parchiapp">here</a>')
 })
