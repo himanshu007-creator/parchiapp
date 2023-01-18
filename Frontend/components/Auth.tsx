@@ -66,12 +66,19 @@ export const Auth: React.FC<AuthProps> = (props:AuthProps)=>{
                     }
             } 
                 else{
+                    if(data.details ==="user already exist"){
+                        setUsername('')
+                        messageHandler("User Already Exists")
+                        setMsgClr('red')
+                    }
+                    else{
                     setUsername('')
                     setPassword('')
                     setRole('')
                     setMsgClr('green')
                     messageHandler('Registration Successful')
                     setMode('Login')
+                    }
                 }
             })
             .catch(()=>{
