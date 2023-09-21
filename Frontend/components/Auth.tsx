@@ -179,7 +179,7 @@ export const Auth: React.FC<AuthProps> = (props:AuthProps)=>{
                 }
                 <div className="flex items-baseline justify-between">
                     <p onClick={()=>submit(submitMode)} className="px-6 py-2 mt-4 text-white bg-red-400 rounded-lg hover:bg-red-600">{selectedmode.buttontext}</p>
-                    <p onClick={()=>{setMode(selectedmode.additionaloptionLink); console.log(">>> HEY:", mode)}}className="text-xs text-red-400 hover:underline">{selectedmode.additionalOption}</p>
+                    <p onClick={()=>{setMode(selectedmode.additionaloptionLink)}}className="text-xs text-red-400 hover:underline">{selectedmode.additionalOption}</p>
                 </div>
             </div>
         </form>

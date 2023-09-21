@@ -89,7 +89,7 @@ Router.get('/delete/:filename',verifyToken,async(req,res)=>{
     );
   }
   else{
-    console.log(">>> HEHE BOII")
+    // NOT HANDLED FOR GOOD
   }
   jwt.verify(token, process.env.JWT,  async(err, user) => {
     if (err) {

@@ -71,7 +71,7 @@ const Upload:React.FC<FileProps> = ({Tok,show,ldng}:FileProps)=>{
                     <span className="text-gray-700">[Pdf / jpeg / jpg / png]</span>
                     <input
                         // @ts-expect-error
-                        onChange={(e)=>{setFile(e.target.files[0]); console.log(e.target.files[0])}}
+                        onChange={(e)=>{setFile(e.target.files[0])}}
                         required
                         data-max-size="2048"
                         name="photo"

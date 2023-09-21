@@ -46,7 +46,6 @@ const Dashboard: React.FC = () => {
     .then(data=>  data.json())
     .then((data) => {
       setFiles(data)
-      console.log(">>> DT: ",data)
     })
     .finally(()=>{
       setLoading(false)
@@ -135,7 +134,7 @@ const Dashboard: React.FC = () => {
             ParchiApp
           </p>
         </div>
-        <div onMouseEnter={() => { console.log("HOVER") }} onClickCapture={() => { setLogoutVisible(!logout) }} onMouseLeave={() => { setTimeout(() => { setLogoutVisible(false) }, 2500) }} className={`group br-1 p-2 text-2xl bg-gray-300 rounded-lg  hover:bg-gray-500 w-16 h-full float-right`}>
+        <div onClickCapture={() => { setLogoutVisible(!logout) }} onMouseLeave={() => { setTimeout(() => { setLogoutVisible(false) }, 2500) }} className={`group br-1 p-2 text-2xl bg-gray-300 rounded-lg  hover:bg-gray-500 w-16 h-full float-right`}>
           <div className='p-2 px-4 bg-red-600 h-full w-full rounded-full'>
             <p className='visible group-hover:invisible '>{username.toUpperCase().charAt(0)}</p>
             <p className='invisible group-hover:visible relative -left-1.5 -top-8 '>⚙️</p>

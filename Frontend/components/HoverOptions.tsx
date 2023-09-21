@@ -53,7 +53,6 @@ const FileOptions = ({ children, show,file ,Tok,lf,setF,sideNv,setAcDocs,resourc
     }
     const setFile = ()=>{
         setF(file);
-        console.log(">>> file: ",file)
     }
 
     const setSideNavVisible= ()=>{

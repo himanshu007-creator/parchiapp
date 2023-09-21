@@ -37,7 +37,7 @@ let gfs, gridfsBucket;
 })
 const port = process.env.SERVER_PORT || 3000
 app.use(cors(corsOptionsDelegate))
-app.listen(port, console.log("listening @",port))
+app.listen(port)
 
 app.use('/file', upload)
 
