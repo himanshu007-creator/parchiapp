@@ -9,4 +9,4 @@ module.exports = withPWA({
 	images: {
 		domains: ['localhost', 'parchiapp-backend.vercel.app']
 	  }
-})
+});
